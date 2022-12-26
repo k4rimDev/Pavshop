@@ -1,0 +1,139 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+
+<!--======= SUB BANNER =========-->
+  <section class="sub-bnr" data-stellar-background-ratio="0.5">
+    <div class="position-center-center">
+      <div class="container">
+        <h4>PROFILE</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
+          Sed feugiat, tellus vel tristique posuere, diam</p>
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">PAGES</a></li>
+          <li class="active">PROFILE</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+    <!-- Content -->
+    <div id="content">
+
+        <div class="container">
+            <section class="user-account-info padding-top-100 padding-bottom-100">
+                <h2 style="margin-bottom: 80px;">
+                    Account Information
+                </h2>
+
+                <div id="contact_message" class="success-msg">
+                  <i class="fa-solid fa-user-check"></i> Your Information was Changed Successfully
+                </div>
+    
+                <div class="alert alert-danger error_message" style="display: none;" role="alert"></div>
+                <div class="account-detail-info row">
+                  <div class="subscription-info col-sm-6">
+                    <h5 class="profile-info-title">Subscription Info</h5>
+                      <form method="post">
+                        {% csrf_token %}
+                          <ul class="row">                  
+                            <li class="col-sm-6">
+                                <label style="width: 100%;">
+                                    {{ form.first_name.label }}
+                                    <div style="margin-top:12px"></div>
+                                    {{ form.first_name }}
+                                </label>
+                            </li>
+                    
+                            <li class="col-sm-6">
+                                <label style="width: 100%;">
+                                    {{ form.last_name.label }}
+                                    <div style="margin-top:12px"></div>
+                                    {{ form.last_name }}
+                                </label>
+                            </li>
+  
+                            <li class="col-sm-12">
+                              <label style="width: 100%;">
+                                  {{ form.email.label }}
+                                  <div style="margin-top:12px"></div>
+                                  {{ form.email }}
+                              </label>
+                            </li>
+  
+                            <li class="col-sm-12">
+                              <label style="width: 100%;">
+                                  {{ form.phone.label }}
+                                  <div style="margin-top:12px"></div>
+                                  {{ form.phone }}
+                              </label>
+                            </li>
+                            
+                            <li class="col-sm-12">
+                                <button type="submit" class="btn margin-top-30">
+                                    Update Subscription Info
+                                </button>
+                            </li>
+                        </ul>
+                      </form>
+                  </div>
+  
+                  {% include 'users/_partials/_change-password.html' %}
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+      $(document).on('submit', '.change-password_form', function(e){
+        e.preventDefault();
+  
+        var csrf_token = $("input[name='csrfmiddlewaretoken']").val();
+        var old_password = $("input[name='old_password']").val();
+        var new_password1 = $("input[name='new_password1']").val();
+        var new_password2 = $("input[name='new_password2']").val();
+
+        console.log(old_password, new_password1, new_password2)
+  
+        let successMessage = $('.success-msg');
+        let errorMessage = $('.error_message');
+    
+        $.ajax({
+          type: "POST",
+          url: "{% url 'users:profile' %}",
+          data: {
+            'csrfmiddlewaretoken': csrf_token,
+            'old_password': old_password,
+            'new_password1': new_password1,
+            'new_password2': new_password2,
+          },
+          success: function(response){
+            successMessage.css("display", "block");
+            errorMessage.css("display", "none");
+            console.log("KEIM")
+            
+          },
+          error: function(response){
+            errorMessage.css("display", "block");  
+            successMessage.css("display", "none");
+            console.log(response["responseJSON"])
+            errorMessage.html("");
+            if (response["responseJSON"]["error"]){
+              $.each(response["responseJSON"]["error"], function(key, value){
+                errorMessage.prepend(
+              `
+                <p>${response["responseJSON"]["error"][key]}</p>
+              `
+            ); 
+              })
+            }
+          }
+          
+        })
+      })
+    </script>
+
+{% endblock content %}

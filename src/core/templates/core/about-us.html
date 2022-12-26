@@ -1,0 +1,290 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!--======= SUB BANNER =========-->
+<section
+  class="sub-bnr"
+  data-stellar-background-ratio="0.5"
+  style="background: url({{ about_background.url }}) no-repeat;"
+>
+  <div class="position-center-center">
+    <div class="container">
+      <h4>ABOUT PAVSHOP</h4>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus
+        maximus vehicula. Sed feugiat, tellus vel tristique posuere, diam
+      </p>
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">ABOUT</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- Content -->
+<div id="content">
+  <!-- History -->
+  <section class="history-block padding-top-100 padding-bottom-100">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-10 center-block">
+          <div class="col-sm-10 center-block">
+            <h4>A Brief History</h4>
+            <p>
+             {{  about.about_header_text }}
+            </p>
+
+            <!-- IMG -->
+            <div class="relative">
+              <img
+                class="img-responsive margin-top-80 margin-bottom-80"
+                src="{{ about.main_image.url }}"
+                alt=""
+              />
+              <div class="position-center-center">
+                <span class="huge-text">our team united by love</span>
+              </div>
+            </div>
+            <p>
+              {{ about.about_footer_text }}
+            </p>
+            <img class="margin-top-50" src="{% static 'images/signature.jpg' %}" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Culture BLOCK -->
+  <section class="cultur-block">
+    <ul id="culture-img-block">
+        {% for culture in awesomeculture %}
+          <li><img src="{{ culture.image }}" alt="" /></li>
+        {% endfor %}
+    </ul>
+
+    <!-- Culture Text -->
+    <div class="position-center-center">
+      <div class="container">
+        <div class="col-sm-6 center-block" id="culture-img-block">
+          <h4>awesome work culture</h4>
+          <p>
+            Phasellus lacinia fermentutm bibendum. Interdum et malante ipuctus
+            non. Nulla lacinia, eros vel fermentum consectetur, ris dolor in ex.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR TEAM -->
+  <section
+    class="our-team our-team-small light-gray-bg padding-top-150 padding-bottom-80"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <!-- HEADING -->
+          <div class="heading style-left">
+            <h4>our Team</h4>
+            <span>United by love & help to build great brands</span>
+          </div>
+        </div>
+
+        <!-- TEAM -->
+        <div class="col-lg-8">
+          <ul class="row" id="staff-container">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Img  -->
+  <section class="client-img-2 padding-top-150 padding-bottom-80">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <!-- HEADING -->
+          <div class="heading style-left">
+            <h4>our sponsors</h4>
+            <span>Proud that we have awesome sponsors</span>
+          </div>
+        </div>
+
+        <!-- TEAM -->
+        <div class="col-lg-8">
+          <ul class="row" id="sponsors">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Img  -->
+  <section class="fun-facts padding-top-150 padding-bottom-80">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <!-- HEADING -->
+          <div class="heading style-left padding-right-20">
+            <h4>few Facts</h4>
+            <span>Awesome Numbers are good :)</span>
+          </div>
+        </div>
+
+        <!-- FUN FACTS -->
+        <div class="col-lg-8">
+          <ul class="row">
+            <!-- SALES -->
+            <li class="col-sm-4">
+              <i class="icon-handbag"></i> <span id="sales-count">457</span>
+              <h5>sales</h5>
+            </li>
+
+            <!-- Products -->
+            <li class="col-sm-4">
+              <i class="icon-grid"></i> <span id="product-count">571</span>
+              <h5>products</h5>
+            </li>
+
+            <!-- Clients -->
+            <li class="col-sm-4">
+              <i class="icon-users"></i> <span id="client-count">289</span>
+              <h5>clients</h5>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TWEET -->
+  <section class="tweet padding-top-100 padding-bottom-100">
+    <div class="container">
+      <div class="col-md-8 center-block">
+        <i class="icon-social-twitter"></i>
+        <p>
+          Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac
+          ante ipsumien lacus, eu posuere eros vel fermentum consectetur, risus
+          purus tempc, et iaculis odio dolor in ex.
+        </p>
+        <span
+          ><span class="primary-color">@johnsmith</span> 4 hours ago via
+          Twitter</span
+        >
+      </div>
+    </div>
+  </section>
+
+
+<script>
+  let sponsorContainer = document.querySelector("#sponsors");
+
+  let sponsorAPIUrl = "http://127.0.0.1:8000/api/about/sponsor";
+  fetch(sponsorAPIUrl)
+  .then(response => {
+    return response.json()
+  })
+  .then(data => {
+    console.log(data)
+    for(let i = 0; i < data.length; i++) {
+      sponsorContainer.innerHTML += `
+        <li class="col-sm-4"><img src="${data.results[i].image}" alt="" /></li>
+      `
+    }
+  })
+
+  let productCount = document.querySelector("#product-count");
+  let clientCount = document.querySelector("#client-count");
+  let salesCount = document.querySelector("#sales-count");
+
+  let statisticAPIUrl = "http://127.0.0.1:8000/api/about/statistics";
+  let staffAPIUrl = "http://127.0.0.1:8000/api/about/staff";
+  let staffContainer = document.querySelector("#staff-container");
+
+  fetch(statisticAPIUrl)
+  .then(response => {
+    return response.json()
+  })
+  .then(data => {
+    productCount.innerHTML = data.products
+    clientCount.innerHTML = data.clients
+    salesCount.innerHTML = data.sales
+    
+  });
+
+  fetch(staffAPIUrl)
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    for(let i = 0; i < data.results.length; i++){
+      console.log(data.results[0].image)
+      staffContainer.innerHTML += `
+      <!-- Member -->
+      <li class="col-md-4 text-center animate fadeInUp" data-wow-delay="0.4s">
+        <article>
+          <!-- abatar -->
+          <div class="avatar">
+            <img class="img-circle" src="${data.results[i].image}" alt="" />
+            <!-- Team hover -->
+            <div class="team-hover">
+              <div class="position-center-center">
+                <div class="social-icons">
+                  <a href="${data.results[i].facebook_url}"><i class="icon-social-facebook"></i></a>
+                  <a href="${data.results[i].twitter_url}"><i class="icon-social-twitter"></i></a>
+                  <a href="${data.results[i].website_url}"><i class="icon-social-dribbble"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Team Detail -->
+          <div class="team-names">
+            <h6>${data.results.full_name}</h6>
+            <p>${data.results.position}</p>
+          </div>
+        </article>
+      </li>
+      `
+    }
+  });
+</script>
+
+<script type="text/javascript">
+  /*==========  Map  ==========*/
+  var map;
+  function initialize_map() {
+    if ($("#map").length) {
+      var myLatLng = new google.maps.LatLng(-37.814199, 144.96156);
+      var mapOptions = {
+        zoom: 17,
+        center: myLatLng,
+        scrollwheel: false,
+        panControl: false,
+        zoomControl: true,
+        scaleControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+      };
+      map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        tittle: "Envato",
+        icon: "./images/map-locator.png",
+      });
+    } else {
+      return false;
+    }
+    google.maps.event.addDomListener(window, "load", initialize_map);
+  }
+</script>
+
+{% block js_files %}
+
+{% endblock %}
+
+{% endblock %}

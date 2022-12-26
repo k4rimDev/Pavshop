@@ -1,0 +1,219 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+  {% include 'users/_partials/_user-header.html' %}
+  
+  <!-- Content -->
+  <div id="content"> 
+    
+    <!--======= PAGES INNER =========-->
+    <section class="chart-page padding-top-100 padding-bottom-100">
+      <div class="container"> 
+        
+        <!-- Payments Steps -->
+        <div class="shopping-cart"> 
+          
+          <!-- SHOPPING INFORMATION -->
+          <div class="cart-ship-info register">
+            <div class="row"> 
+              
+              <!-- ESTIMATE SHIPPING & TAX -->
+              <div class="col-sm-12">
+                <h6>REGISTER</h6>
+
+                <div id="contact_message" class="success-msg">
+                  <i class="fa-solid fa-user-check"></i> Thank You. Your have been Registered
+                </div>
+    
+                <div class="alert alert-danger error_message" style="display: none;" role="alert"></div>
+
+                <form action="{% url 'users:register' %}" method='post' class='register_form'>
+                  <ul class="row">
+                    
+                    {% csrf_token %}
+
+                    {{ register_form_errors }}
+
+                    {% comment %} {{ form }} {% endcomment %}
+                    <!-- Name -->
+                    <li class="col-md-6">
+                      <label>{{ register_form.first_name.label }}
+                        {{ register_form.first_name }}
+                      </label>
+                    </li>
+                    
+                    <!-- LAST NAME -->
+                    <li class="col-md-6">
+                      <label>{{ register_form.last_name.label }}
+                        {{ register_form.last_name }}
+                      </label>
+                    </li>
+                    
+                    <!-- EMAIL ADDRESS -->
+                    <li class="col-md-6">
+                      <label>{{ register_form.email.label }}
+                        {{ register_form.email }}
+                      </label>
+                    </li>
+
+                    <!-- PHONE -->
+                    <li class="col-md-6">
+                      <label>{{ register_form.phone.label }}
+                        {{ register_form.phone }}
+                      </label>
+                    </li>
+                    
+                    <!-- PASSWORD -->
+                    <li class="col-md-6">
+                      <label>{{ register_form.password1.label }}
+                        {{ register_form.password1 }}
+                        {{ register_form.password1.errors }}
+                      </label>
+                    </li>
+                    
+                    <!-- PASSWORD -->
+                    <li class="col-md-6">
+                      <label>{{ register_form.password2.label }}
+                        {{ register_form.password2 }}
+                      </label>
+                    </li>
+
+                 
+                    
+                    <!-- ADDRESS -->
+                    <li class="col-md-6"> 
+                      <label>{{ register_form.address.label }}
+                        {{ register_form.address }}
+                      </label>
+                    </li>
+                    
+                    <!-- COUNTRY -->
+                    <li class="col-md-6">
+                      {% comment %} <label> COUNTRY
+                        <select class="selectpicker" name="contry-state">
+                          <option>COUNTRY</option>
+                          <option>Country 2</option>
+                          <option>Country 3</option>
+                        </select>
+                      </label> {% endcomment %}
+
+                      <label>{{ register_form.country.label }}
+                        {{ register_form.country }}
+                      </label>
+                    </li>
+                    
+                    <!-- TOWN/CITY -->
+                    <li class="col-md-6">
+                      <label>{{ register_form.city.label }}
+                        {{ register_form.city }}
+                      </label>
+                    </li> 
+                    
+                    <!-- SUBMIT -->
+                    {% comment %} <form method="post">
+                      {% csrf_token %}
+                      <ul class="row">
+                        <li class="col-md-6" style="position: relative; z-index:9999999999;">
+                            {{ register_form | crispy }}
+                        </li>
+
+                    {% endcomment %}
+                    
+                    <!-- REGISTER BUTTON -->
+                    <li class="col-md-6">
+                      <button type="submit" class="btn">REGISTER NOW</button>
+                    </li>
+                  </ul>
+                </form> 
+                <p class="text-center">If you already have an account, <a href="{% url 'users:login' %}">login</a> instead.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- About -->
+    <section class="small-about padding-top-150 padding-bottom-150">
+      <div class="container"> 
+        
+        <!-- Main Heading -->
+        <div class="heading text-center">
+          <h4>about PAVSHOP</h4>
+          <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia,
+            eros vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in ex. </p>
+        </div>
+        
+        <!-- Social Icons -->
+        <ul class="social_icons">
+          <li><a href="#."><i class="icon-social-facebook"></i></a></li>
+          <li><a href="#."><i class="icon-social-twitter"></i></a></li>
+          <li><a href="#."><i class="icon-social-tumblr"></i></a></li>
+          <li><a href="#."><i class="icon-social-youtube"></i></a></li>
+          <li><a href="#."><i class="icon-social-dribbble"></i></a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script type="text/javascript">
+
+    $(document).on('submit', '.register_form', function(e){
+      e.preventDefault();
+
+      var csrf_token = $("input[name='csrfmiddlewaretoken']").val();
+      var first_name = $("input[name='first_name']").val();
+      var last_name = $("input[name='last_name']").val();
+      var email = $("input[name='email']").val();
+      var phone = $("input[name='phone']").val();
+      var password1 = $("input[name='password1']").val();
+      var password2= $("input[name='password2']").val();
+      var address = $("textarea[name='address']").val();
+      var country = $("select[name='country']").find(":selected").val();
+      var city = $("input[name='city']").val();
+
+      let successMessage = $('.success-msg');
+      let errorMessage = $('.error_message');
+  
+      $.ajax({
+        type: "POST",
+        url: "{% url 'users:register' %}",
+        data: {
+          'csrfmiddlewaretoken': csrf_token,
+          'first_name': first_name,
+          'last_name': last_name,
+          'password1': password1,
+          'password2': password2,
+          'email': email,
+          'phone': phone,
+          'address': address,
+          'country': country,
+          'city': city,
+        },
+        success: function(response){
+          successMessage.css("display", "block");
+          errorMessage.css("display", "none");
+          
+        },
+        error: function(response){
+          errorMessage.css("display", "block");  
+          successMessage.css("display", "none");
+          errorMessage.html("");
+          if (response["responseJSON"]["error"]){
+            $.each(response["responseJSON"]["error"], function(key, value){
+              errorMessage.prepend(
+            `
+              <p>${response["responseJSON"]["error"][key]}</p>
+            `
+          ); 
+            })
+          }
+        }
+        
+      })
+    })
+  </script>
+  
+  {% endblock %}

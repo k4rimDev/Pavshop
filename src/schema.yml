@@ -1,0 +1,500 @@
+openapi: 3.0.3
+info:
+  title: api/products
+  version: 1.0.0
+  description: PAVSHOP E-commerce website
+paths:
+  /api/category:
+    get:
+      operationId: category_list
+      tags:
+      - category
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+          description: ''
+  /api/category/{id}:
+    get:
+      operationId: category_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - category
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/category/create/:
+    post:
+      operationId: category_create_create
+      tags:
+      - category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/category/delete/{id}:
+    delete:
+      operationId: category_delete_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - category
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/category/update/{id}:
+    put:
+      operationId: category_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    patch:
+      operationId: category_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/product:
+    get:
+      operationId: product_list
+      tags:
+      - product
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+          description: ''
+  /api/product/{id}:
+    get:
+      operationId: product_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - product
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+  /api/product/create/:
+    post:
+      operationId: product_create_create
+      tags:
+      - product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+  /api/product/delete/{id}/:
+    delete:
+      operationId: product_delete_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - product
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/product/update/{id}/:
+    put:
+      operationId: product_update_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    patch:
+      operationId: product_update_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+components:
+  schemas:
+    Brand:
+      type: object
+      description: Brand Serializer
+      properties:
+        name:
+          type: string
+          maxLength: 60
+      required:
+      - name
+    Category:
+      type: object
+      description: List API
+      properties:
+        name:
+          type: string
+          maxLength: 30
+        category_image:
+          type: string
+          format: uri
+          nullable: true
+      required:
+      - name
+    Nested:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        name_az:
+          type: string
+          nullable: true
+          title: Name [az]
+          maxLength: 255
+        name_en:
+          type: string
+          nullable: true
+          title: Name [en]
+          maxLength: 255
+        name_ru:
+          type: string
+          nullable: true
+          title: Name [ru]
+          maxLength: 255
+      required:
+      - id
+      - name
+    PatchedCategory:
+      type: object
+      description: List API
+      properties:
+        name:
+          type: string
+          maxLength: 30
+        category_image:
+          type: string
+          format: uri
+          nullable: true
+    PatchedProduct:
+      type: object
+      properties:
+        product_name:
+          type: string
+          maxLength: 60
+        main_image:
+          type: string
+          format: uri
+          nullable: true
+        brief_info:
+          type: string
+          maxLength: 255
+        price:
+          type: number
+          format: double
+        category_id:
+          $ref: '#/components/schemas/Category'
+        tag_id:
+          type: string
+          readOnly: true
+        brand_id:
+          $ref: '#/components/schemas/Brand'
+        discount_status:
+          type: boolean
+          nullable: true
+        discount_percent:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        designer_id:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+        product_detail:
+          type: string
+        delivery_info:
+          type: string
+        product_description:
+          type: string
+        product_info:
+          type: string
+        availability:
+          type: boolean
+          nullable: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        colors:
+          type: string
+          readOnly: true
+    Product:
+      type: object
+      properties:
+        product_name:
+          type: string
+          maxLength: 60
+        main_image:
+          type: string
+          format: uri
+          nullable: true
+        brief_info:
+          type: string
+          maxLength: 255
+        price:
+          type: number
+          format: double
+        category_id:
+          $ref: '#/components/schemas/Category'
+        tag_id:
+          type: string
+          readOnly: true
+        brand_id:
+          $ref: '#/components/schemas/Brand'
+        discount_status:
+          type: boolean
+          nullable: true
+        discount_percent:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        designer_id:
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
+        product_detail:
+          type: string
+        delivery_info:
+          type: string
+        product_description:
+          type: string
+        product_info:
+          type: string
+        availability:
+          type: boolean
+          nullable: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        colors:
+          type: string
+          readOnly: true
+      required:
+      - brand_id
+      - brief_info
+      - category_id
+      - colors
+      - delivery_info
+      - designer_id
+      - price
+      - product_description
+      - product_detail
+      - product_info
+      - product_name
+      - slug
+      - tag_id
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

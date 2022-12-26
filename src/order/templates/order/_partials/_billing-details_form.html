@@ -1,0 +1,50 @@
+<form method = 'post' id="billing-info-form">
+    {% csrf_token %}
+    {{ billing_form.billing_form }}
+    <ul class="row">
+      <!-- Name -->
+      <li class="col-md-6">
+        <label>
+          {{ billing_form.first_name.label }}
+          {{ billing_form.first_name }}
+        </label>
+      </li>
+      <!-- LAST NAME -->
+      <li class="col-md-6">
+        <label>
+          {{ billing_form.last_name.label }}
+          {{ billing_form.last_name }}
+        </label>
+      </li>
+
+      <!-- PHONE -->
+      <li class="col-md-6">
+        <label>
+         {{ billing_form.phone.label }}
+         {{ billing_form.phone }}
+        </label>
+      </li>
+
+      <li class="col-md-6">
+        <!-- ADDRESS -->
+        <label>
+            {{ billing_form.address.label }}
+            {{ billing_form.address }}
+        </label>
+      </li>
+
+      <li class="col-md-6">
+        <button type="submit" class="btn">continue</button>
+      </li>
+
+      <!-- CREATE AN ACCOUNT -->
+      <li class="col-md-6">
+        <div class="checkbox margin-0 margin-top-20">
+          <input id="checkbox1" class="styled" type="checkbox" />
+          <label for="checkbox1">
+            Ship to a different address
+          </label>
+        </div>
+      </li>
+    </ul>
+  </form>

@@ -1,0 +1,257 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!--======= SUB BANNER =========-->
+<section
+  class="sub-bnr"
+  data-stellar-background-ratio="0.5"
+  style="background: url({{ cart_background.image.url }}) no-repeat;"
+>
+  <div class="position-center-center">
+    <div class="container">
+      <h4>SHOPPING CART</h4>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus
+        maximus vehicula. Sed feugiat, tellus vel tristique posuere, diam
+      </p>
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'products:products' %}">SHOP</a></li>
+        <li class="active">WHISLIST</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- Content -->
+<div id="content">
+  <!--======= PAGES INNER =========-->
+  <section class="padding-top-100 padding-bottom-100 pages-in chart-page">
+    <div class="container">
+      <!-- Payments Steps -->
+      <div class="shopping-cart text-center">
+        <div class="cart-head">
+          <ul class="row">
+            <!-- PRODUCTS -->
+            <li class="col-sm-2 text-left">
+              <h6>PRODUCTS</h6>
+            </li>
+            <!-- NAME -->
+            <li class="col-sm-4 text-left">
+              <h6>NAME</h6>
+            </li>
+            <!-- PRICE -->
+            <li class="col-sm-1">
+              <h6>PRICE</h6>
+            </li>
+            <!-- STOCK -->
+            <li class="col-sm-2">
+                <h6>STOCK</h6>
+            </li>
+            <!-- REMOVE -->
+            <li class="col-sm-2">
+              <h6>REMOVE</h6>
+            </li>
+            <li class="col-sm-1"></li>
+          </ul>
+        </div>
+
+        <div class="whislist-container">
+            
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="small-about padding-top-150 padding-bottom-150">
+    <div class="container">
+      <!-- Main Heading -->
+      <div class="heading text-center">
+        <h4>about PAVSHOP</h4>
+        <p>
+          Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac
+          ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia, eros
+          vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in
+          ex.
+        </p>
+      </div>
+
+      <!-- Social Icons -->
+      <ul class="social_icons">
+        <li>
+          <a href="#."><i class="icon-social-facebook"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-twitter"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-tumblr"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-youtube"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-dribbble"></i></a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  {% endblock %}
+
+  {% block js_files %}
+    <script src="{% static 'js/basket.js' %}"></script>
+    <script>
+        let wishlistUser = {{user.id}};
+        console.log(wishlistUser);
+        let whislistContainer = document.querySelector('.whislist-container');
+        let whislistApiUrl = 'http://127.0.0.1:8000/api/cart/wishlist/';
+
+        fetch(`${whislistApiUrl}${wishlistUser}`)
+        .then(response => response.json())
+        .then(data => {
+            for(let i = 0; i < data.length; i++) {
+                whislistContainer.innerHTML += 
+            `
+                <ul class="row cart-details">
+                    <li class="col-sm-6">
+                    <div class="media">
+                        <!-- Media Image -->
+                        <div class="media-left media-middle">
+                        <a href="#." class="item-img">
+                            <img
+                            class="media-object"
+                            src='${data[0].product.main_image}'
+                            alt=""
+                            />
+                        </a>
+                        </div>
+        
+                        <!-- Item Name -->
+                        <div class="media-body">
+                        <div class="position-center-center">
+                            <h5>${data[0].product.product_name}</h5>
+                            <p>${data[0].product.brief_info}</p>
+                        </div>
+                        </div>
+                    </div>
+                    </li>
+        
+                    <!-- PRICE -->
+                    <li class="col-sm-2">
+                    <div class="position-center-center">
+                        <span class="price"><small>$</small>${data[0].product.price}</span>
+                    </div>
+                    </li>
+        
+                    <!-- STOCK -->
+                    <li class="col-sm-1">
+                    <div class="position-center-center">
+                        <div class="">
+                            In Stock
+                        </div>
+                    </div>
+                    </li>
+        
+                    <!-- REMOVE -->
+                    <li class="col-sm-1">
+                    <div class="position-center-center">
+                        <a href="#."
+                        ><i
+                            class="icon-close update-basket update-whislist"
+                            data-product="${data[0].product.id}"
+                        ></i
+                        ></a>
+                    </div>
+                    </li>
+                </ul>
+            `
+            }
+        })
+        .then(data => {
+          let button = document.querySelectorAll(".update-whislist");
+          console.log(button)
+          let url = "http://127.0.0.1:8000/api/cart/wishlist/";
+
+          function getToken(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+          }
+          let token = JSON.parse(getToken("token")).token;
+          // let csrftoken = document.querySelector("[name='csrfmiddlewaretoken']").value;
+          console.log(button)
+          button.forEach(element => {
+              element.addEventListener("click", (e) =>{
+                  if (user==="AnonymousUser"){
+                      addCookieWhislist(element.dataset.product);
+                  }else{
+                      console.log(element.dataset.product)
+                      updateWhislist(element.dataset.product)
+                  }
+              })
+          });
+
+          function updateWhislist(productId){
+              fetch(`${url}${productId}`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `token ${token}`,
+                    "X-CSRFToken": csrftoken,
+                  },
+                })
+                  .then((response) => {
+                    return response.json();
+                  })
+              
+                  .then((data) => {
+                    console.log(data);
+                    location.reload();
+                  });
+          }
+
+          function addCookieWhislist(productId) {
+            
+              if (action == "add") {
+                if (cart[productId] == undefined) {
+                  cart[productId] = { quantity: 1 };
+                  if (color != undefined || color != null || color != "") {
+                    cart[productId] = {quantity: 1, color: color}
+                  }else{
+                    cart[productId] = {quantity: 1}
+                  }
+                } else {
+                  cart[productId]["quantity"] += 1;
+                  if (color != undefined || color != null || color != "") {
+                    cart[productId] = {quantity: cart[productId]["quantity"] , color: color}
+                  }else{
+                    cart[productId] = {quantity: cart[productId]["quantity"]}
+                  }
+                }
+              }
+            
+              if (action == "remove") {
+                cart[productId]["quantity"] -= 1;
+            
+                if (cart[productId]["quantity"] <= 0) {
+                  console.log("Item should be deleted");
+                  delete cart[productId];
+                }
+              }
+              document.cookie = "cart=" + JSON.stringify(cart) + ";domain=;path=/";
+            
+              location.reload();
+            }
+        })
+    </script>
+  {% endblock js_files %}
+</div>

@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/profile2.css' %}">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/profilePic.css' %}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+  <div class="main-content">
+    <!-- Top navbar -->
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+      <div class="container-fluid">
+        <!-- Brand -->
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="https://www.creative-tim.com/product/argon-dashboard" target="_blank">User profile</a>
+        <!-- Form -->
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto" method="get" action="/products">
+          <div class="form-group mb-0">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control" placeholder="Search" type="text" name="search_product">
+            </div>
+          </div>
+        </form>
+        <!-- User -->
+        <ul class="navbar-nav align-items-center d-none d-md-flex">
+          <li class="nav-item dropdown">
+            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="media align-items-center">
+                <span class="avatar avatar-sm rounded-circle">
+                  <img alt="Image placeholder" src="{{ user.profile_image }}">
+                </span>
+                <div class="media-body ml-2 d-none d-lg-block">
+                  <span class="mb-0 text-sm  font-weight-bold">{{ user.full_name }}</span>
+                </div>
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+              <div class=" dropdown-header noti-title">
+                <h6 class="text-overflow m-0">Welcome!</h6>
+              </div>
+              <a href="/" class="dropdown-item">
+                <i class="ni ni-single-02"></i>
+                <span>My profile</span>
+              </a>
+              <a href="../examples/profile.html" class="dropdown-item">
+                <i class="ni ni-settings-gear-65"></i>
+                <span>Settings</span>
+              </a>
+              <a href="../examples/profile.html" class="dropdown-item">
+                <i class="ni ni-calendar-grid-58"></i>
+                <span>Activity</span>
+              </a>
+              <a href="../examples/profile.html" class="dropdown-item">
+                <i class="ni ni-support-16"></i>
+                <span>Support</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#!" class="dropdown-item">
+                <i class="ni ni-user-run"></i>
+                <span>Logout</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Header -->
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://raw.githubusercontent.com/creativetimofficial/argon-dashboard/gh-pages/assets-old/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+      <!-- Mask -->
+      <span class="mask bg-gradient-default opacity-8"></span>
+      <!-- Header container -->
+      <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+          <div class="col-lg-7 col-md-10">
+            <h1 class="display-2 text-white" style="min-width: 450px;">Hello {{ user.full_name }}</h1>
+            <a href="{% url 'core:home' %}" class="btn btn-info">Back home page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--7">
+      <div class="row">
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="row justify-content-center" style="margin-bottom: -120px;">
+              <div class="order-lg-2">
+                {% comment %} <div class="card-profile-image">
+                  <a href="#">
+                    <img src="{{ user.profile_image }}" class="rounded-circle">
+                  </a>
+                </div> {% endcomment %}
+
+                <form class="card-container" method="post" id="card-container" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="avatar-upload">
+                      <div class="avatar-edit">
+                          <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                          <label for="imageUpload"></label>
+                      </div>
+                      <div class="avatar-preview">
+                          <div id="imagePreview" style="background-image: url('{{ user.profile_image  }}');">
+                          </div>
+                      </div>
+                </div>
+
+                <button class="btn btn-primary col-lg-12" type="submit" style="width: 100%;position:relative;z-index:99;" id="imageBtn">Save</button>
+              </form>
+              </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+            </div>
+            <div class="card-body pt-0 pt-md-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                    <div>
+                      <span class="heading">{{ user.orders.all.count }}</span>
+                      <span class="description">Ordered Product</span>
+                    </div>
+                    <div>
+                      <span class="heading">{{ user.whislist.all.count }}</span>
+                      <a href="{% url 'carts:whislist' %}" class="description">Whislist</a>
+                    </div>
+                    <div>
+                      <span class="heading">{{ user.comments.all.count }}</span>
+                      <span class="description">Comments</span>
+                    </div>
+                  </div>
+                  <form class="" method="post">
+                    {% csrf_token %}
+                    <div class="col-lg-12">
+                        <div class="form-group focused">
+                          <label class="form-control-label" for="input-username">Old password</label>
+                          {{ passwordForm.old_password }}
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group focused">
+                          <label class="form-control-label" for="input-username">New password</label>
+                          {{ passwordForm.new_password1 }}
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group focused">
+                          <label class="form-control-label" for="input-username">New password confirmation</label>
+                          {{ passwordForm.new_password2 }}
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group focused">
+                            <button class="btn btn-primary" type="submit" style="width: 100%;" id="password-change-btn">Save</button>
+                        </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8 order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">My account</h3>
+                </div>
+                
+            </div>
+            <div class="card-body">
+              <form method="post">
+                {% csrf_token %}
+                <h6 class="heading-small text-muted mb-4">User information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-username">Username</label>
+                        {{ form.username }}
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">Email address</label>
+                        {{ form.email }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-first-name">First name</label>
+                        {{ form.first_name }}
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-last-name">Last name</label>
+                        {{ form.last_name }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4 text-right">
+                  <button class="btn btn-sm btn-primary" type="submit" style="width: 100%;">Save</button>
+                </div>
+              </form>
+                <hr class="my-4">
+                <!-- Address -->
+                <form action="">
+                <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-address">Address</label>
+                        {{ shipping_form.address }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-city">City</label>
+                        {{ shipping_form.city }}
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-country">Country</label>
+                        {{ shipping_form.country }}
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-country">Postal code</label>
+                        {{ shipping_form.zipcode }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/changePassword.js' %}"></script>
+  <script src="{% static 'js/profilePic.js' %}"></script>
+</body>
+</html>

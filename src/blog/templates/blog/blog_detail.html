@@ -1,0 +1,441 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+{% load render_partial %}
+{% load social_share %}
+
+
+<!--======= SUB BANNER =========-->
+<section class="sub-bnr" data-stellar-background-ratio="0.5" style="background: url({{ blog.category_id.category_image.url }}) no-repeat;">
+  <div class="position-center-center">
+    <div class="container">
+      <h4>THE unique CHAIR BY PAVSHOP</h4>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus
+        maximus vehicula. Sed feugiat, tellus vel tristique posuere, diam
+      </p>
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">BLOg details</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- Content -->
+<div id="content">
+  <!-- Blog List -->
+  <section
+    class="blog-list blog-list-3 single-post padding-top-100 padding-bottom-100"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <!-- Article -->
+          <article>
+            <!-- Post Img -->
+            <img
+              class="img-responsive"
+              src="{{ blog.image.url }}"
+              alt=""
+            />
+            <!-- Tittle -->
+            <div class="post-tittle left">
+              <a href="#." class="tittle">{{ blog.title}}</a>
+              <!-- Post Info -->
+              <span><i class="primary-color icon-user"></i> by {{ blog.author}}</span>
+              <span
+                ><i class="primary-color icon-calendar"></i> {{ blog.created_at|date:"F j, Y" }}</span
+              >
+              <span><i class="primary-color icon-bubble"></i> {{ blog.comments.count }}</span>
+              <span><i class="primary-color icon-tag"></i> {{ blog.category }}</span>
+            </div>
+            <!-- Post Content -->
+            <div class="text-left">
+              {{blog.text| safe}}
+              
+
+              <!-- LIST STYLE -->
+              <ul class="list-group margin-top-50 margin-top-20">
+                <li>
+                  <p>Donec sed dictum leo, et posuere felis.</p>
+                </li>
+                <li>
+                  <p>
+                    Sed pharetra mauris vel varius suscipit. Aliquam lectus
+                    velit,
+                  </p>
+                </li>
+                <li>
+                  <p>Tempus id est ut, volutpat maximus sapien.</p>
+                </li>
+              </ul>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                volutpat dui aolutpat dui at lacus aliquet, a consequat et lacus
+                aliquet, a consequat enim aliquet. Integer molestie sit ame.
+              </p>
+
+              <!-- Blockquote -->
+              <blockquote>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                volutpat dui at lacus aliquet, a consequat enim aliquet. Integer
+                molestie sit amet sem et faucibus.
+              </blockquote>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                NullamMorbi ac scelerisque mauris. Etiam sodales a nulla ornare
+                viverra. Nunc at blandit neque, bociis natoque penatibus et
+                magnnascetiscing elit. NullamMorbi ac scelerisque miscing elit.
+                NullamMorbi ac scelerisque mur ridic volutpat dui at lacus
+                aliquet, a consequat enim aliquet. Integer molestie sit ame.
+              </p>
+
+              <!-- Tags -->
+              <div class="row margin-top-50">
+                <div class="col-md-8">
+                  <h5 class="shop-tittle">PRODUCT TAGS</h5>
+                  <ul class="shop-tags padding-left-15">
+                    {% for category in categories %}
+                    <li>
+                      <a href="{{ category.id }}"><span>{{ category }}</span></a>
+                    </li>
+                  {% endfor %}
+                  </ul>
+                </div>
+
+                <!-- Share With -->
+                <div class="col-md-4">
+                  <h5 class="shop-tittle">share with</h5>
+                  <ul class="share-post">
+                    <li>
+                      {% post_to_facebook object_or_url "facebook" %}
+                    </li>
+                    <li>
+                      {% post_to_twitter "New blog: {{ blog.title }}. Check it out!" object_or_url "twitter" %} 
+                      {% comment %} <a href="#." ><i class="icon-social-twitter"></i> twitter</a>
+                      <a href="#." ><i class="icon-social-facebook"></i> facebook</a> {% endcomment %}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- ADMIN info -->
+              <div class="admin-info">
+                <div class="media-left">
+                  <div class="admin-pic">
+                    <img src="{% static 'images/admin-avatar.jpg' %}" alt="" />
+                  </div>
+                </div>
+                <div class="media-body">
+                  <h6>NATASHA S. <span>Co-Founder</span></h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    NullamMorbi ac scelerisque mauris. Etiam sodales a nulla
+                    ornare viverra. Nunc at blandit neque, bociis natoque
+                    penatcing e scelerisque miscing elit.
+                  </p>
+                  <div class="admin-social">
+                    <a href="#."><i class="icon-social-facebook"></i></a>
+                    <a href="#."><i class="icon-social-twitter"></i></a>
+                    <a href="#."><i class="icon-social-dribbble"></i></a>
+                    <a href="#."><i class="icon-envelope"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <!--=======  COMMENTS =========-->
+              <div class="comments margin-top-80">
+                <h5 class="shop-tittle margin-bottom-30">COMMENTS</h5>
+                <ul class="media-list padding-left-15">
+                  <!--=======  COMMENTS =========-->
+                  {% for comment in comments %}
+                  {% if comment.parent == Null %}
+                  <li class="media">
+                    <div class="media-left">
+                      <a href="#" class="avatar">
+                        <img
+                          class="media-object img-responsive"
+                          src="{% static 'images/avatar-1.jpg' %}"
+                          alt=""
+                        />
+                        <br />
+                      </a>
+                    </div>
+                    <div class="media-body">
+                      <h6 class="media-heading">
+                        {{ comment.name }}
+                        <span
+                          ><i class="icon-clock primary-color"></i>
+                          {{ comment.created_at|date:"F j, Y - h:i A" }}</span
+                        >
+                      </h6>
+                      <p>
+                        {{ comment.comment_text }}
+                      </p>
+                      <a href="#." class="raply"
+                        ><i class="icon-bubble primary-color"></i> Reply</a
+                      >
+                      <div class="reply-form d-none">
+                        {% include 'blog/_partials/_blog-post-comment_form.html' with form=form comment_id=comment.id %}
+                      </div>
+                    </div>
+                  </li>
+                  <ul class="children-comments padding-left-100">
+                    {% for child_comment in comments %}
+                      {% if child_comment.parent_id == comment.id %}
+                      <li class="media">
+                        <div class="media-left">
+                          <a href="#" class="avatar">
+                            <img
+                              class="media-object img-responsive"
+                              src="{% static 'images/avatar-1.jpg' %}"
+                              alt=""
+                            />
+                            <br />
+                          </a>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">
+                            {{ child_comment.name }}
+                            <span
+                              ><i class="icon-clock primary-color"></i> {{ child_comment.created_at|date:"F j, Y - h:i A" }}</span
+                            >
+                          </h6>
+                          <p>
+                            {{ child_comment.comment_text }}
+                          </p>
+                          <a href="#." class="raply"
+                            ><i class="icon-bubble primary-color"></i> Reply</a
+                          > 
+                          <div class="reply-form d-none">
+                            {% include 'blog/_partials/_blog-post-comment_form.html' with form=form comment_id=comment.id %}
+                          </div>
+                        </div>
+                      </li>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                  </ul>
+                  {% endfor %}
+                </ul>
+                <hr />
+
+                <!--=======  LEAVE COMMENTS =========-->
+                {% include 'blog/_partials/_blog-post-comment_form.html' with form=form comment_id=comment.id %}
+              </div>
+            </div>
+          </article>
+          <hr />
+
+          <!--  You May Like -->
+          <h5 class="shop-tittle margin-top-50 margin-bottom-50">
+            you may like
+          </h5>
+          {% for blog in similar_blogs %}
+          <div class="alos-like padding-left-15">
+            <!-- Article -->
+            <article>
+              <div class="row">
+                <div class="col-sm-5">
+                  <!-- Post Img -->
+                  <img
+                    class="img-responsive"
+                    src="{{blog.image.url}}"
+                    alt=""
+                  />
+                </div>
+                <div class="col-sm-7">
+                  <!-- Tittle -->
+                  
+                  <div class="post-tittle left">
+                    <a href="{{ blog.get_absolute_url }}" class="tittle">{{ blog.title }}</a>
+                    <!-- Post Info -->
+                    <span
+                      ><i class="primary-color icon-user"></i> by {{ blog.author }}</span
+                    >
+                    <span
+                      ><i class="primary-color icon-calendar"></i> {{ blog.created_at|date:"F j, Y" }}</span
+                    >
+                    <span><i class="primary-color icon-bubble"></i> {{ blog.comments.count }}</span>
+                    <span
+                      ><i class="primary-color icon-tag"></i> {{ blog.category }}</span
+                    >
+                  </div>
+                 
+                  <!-- Post Content -->
+                  <div class="text-left">
+                    {{ blog.text|safe|truncatechars:200 }}
+                    <a href="#." class="red-more">READ MORE</a>
+                  </div>
+                  
+                </div>
+              </div>
+            </article>
+          </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Sider Bar -->
+        <div class="col-md-3">
+          <div class="shop-sidebar">
+            <!-- SEARCH -->
+            <form class="search" action='/blog' method='get'>
+              {% csrf_token %}
+              {{ search_blog_form.search_text }}
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+
+            <!-- Category -->
+            <h5 class="shop-tittle margin-bottom-30">category</h5>
+            <ul class="shop-cate">
+              {% for category in categories %}
+                <li>
+                  <a href="{{ category.id }}"><span>{{ category }}</span></a>
+                </li>
+              {% endfor %}
+            </ul>
+
+            <!-- Recent Post -->
+            <h5 class="shop-tittle margin-top-60 margin-bottom-30">
+              recent post
+            </h5>
+            <ul class="papu-post margin-top-20">
+              {% for blog in recent_blogs %}
+              <li class="media">
+                <div class="media-left">
+                  <a href="#">
+                    <img class="media-object" src="{{blog.image.url}}" alt=""
+                  /></a>
+                </div>
+                <div class="media-body">
+                  <a class="media-heading" href="#."
+                    >{{ blog.title}}</a
+                  >
+                  <span>Posted on {{blog.created_at.date}}</span>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+
+            <!-- TAGS -->
+            <h5 class="shop-tittle margin-top-60 margin-bottom-30">
+              PAUPLAR TAGS
+            </h5>
+            <ul class="shop-tags">
+              {% for tag in blogtags %}
+              <li><a href="{{tag.id}}">{{tag}}</a></li>
+              {% endfor %}
+            </ul>
+
+            <!-- BRAND -->
+            <h5 class="shop-tittle margin-top-60 margin-bottom-30">archives</h5>
+            <ul class="shop-cate">
+              <li><a href="#."> January 2015 </a></li>
+              <li><a href="#."> February 2015 </a></li>
+              <li><a href="#."> March 2015 </a></li>
+              <li><a href="#."> April 2015 </a></li>
+              <li><a href="#."> May 2015 </a></li>
+            </ul>
+
+            <!-- SIDE BACR BANER -->
+            <div class="side-bnr margin-top-50">
+              <img class="img-responsive" src="{{ new_product.main_image.url }}" alt="" />
+              <div class="position-center-center">
+                <span class="price"><small>$</small>{{ new_product.price }}</span>
+                <div class="bnr-text"><a href="{{ new_product.id }}">look hot with style</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Culture BLOCK -->
+  <section class="cultur-block">
+    <ul>
+      <li><img src="{% static 'images/cultur-img-1.jpg' %}" alt="" /></li>
+      <li><img src="{% static 'images/cultur-img-2.jpg' %}" alt="" /></li>
+      <li><img src="{% static 'images/cultur-img-3.jpg' %}" alt="" /></li>
+      <li><img src="{% static 'images/cultur-img-4.jpg' %}" alt="" /></li>
+    </ul>
+
+    <!-- Culture Text -->
+    <div class="position-center-center">
+      <div class="container">
+        <div class="col-sm-6 center-block">
+          <h4>FOLLOW US @ INSTAGRAM</h4>
+          <p>
+            Phasellus lacinia fermentutm bibendum. Interdum et malante ipuctus
+            non. Nulla lacinia, eros vel fermentum consectetur, ris dolor in ex.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+{% endblock %} 
+
+
+{% block js_files %}
+  <script type="text/javascript">
+
+    {% comment %} $(document).on('submit', '#comment-form', function(e){
+      e.preventDefault();
+      let serializedData = $(this).serialize();
+    $.ajax({
+      type: "POST",
+      url: "{{ blog.get_absolute_url }}",
+      data: {
+        csrfmiddlewaretoken: '{% csrf_token %}',
+        data: serializedData,
+            success: function (response) {
+                // on successfull creating object
+                // 1. clear the form.
+                $("#comment-form").trigger('reset');
+                // 2. focus to nickname input 
+
+                // display the newly friend to table.
+                var instance = JSON.parse(response["instance"]);
+                var fields = instance[0]["fields"];
+                $("#my_friends tbody").prepend(
+                    `<tr>
+                    <td>${fields["nick_name"]||""}</td>
+                    <td>${fields["first_name"]||""}</td>
+                    <td>${fields["last_name"]||""}</td>
+                    <td>${fields["likes"]||""}</td>
+                    <td>${fields["dob"]||""}</td>
+                    <td>${fields["lives_in"]||""}</td>
+                    </tr>`
+                )
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    }) {% endcomment %}
+
+  let replyBtn = document.querySelectorAll('.raply');
+  let replyForm = document.querySelectorAll('.reply-form');
+  replyBtn.forEach((item, index) =>{
+    item.addEventListener('click', ()=>{
+      if (replyForm[index].classList.contains('d-none')){
+        replyForm[index].classList.remove('d-none')
+      }else{
+
+
+        replyForm[index].classList.add('d-none')
+      }
+      {% comment %} replyForm.forEach((form, jndex) =>{
+        if (form.classList.contains('d-none')){
+          form.classList.remove('d-none')
+        }else{
+          form.classList.add('d-none')
+        }
+      }){% endcomment %}
+     }); 
+    })
+  </script> 
+{% endblock %}

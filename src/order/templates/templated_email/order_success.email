@@ -1,0 +1,176 @@
+{% block subject %} New Order notification{% endblock %}
+{% block html %}
+{% load static %}
+<style>
+    h3{
+        font-size: 24px;
+    }
+</style>
+
+<div class="order-intro mx-auto" style="width: 500px; margin:0 auto;">
+    <img src="{% static 'images/thick-mark.jpeg' %}" alt="" class="order-success-image" style="max-width: 100px; display: block; margin-left:190px">
+    <h2 class="order-intro__title" style="margin-left: 130px; width: 60%; margin-bottom: 40px;">
+        THANK YOU
+    </h2>
+
+    <p class="order-intro__text">
+        Payment is Succesfully Processed and your Order is now on the way
+    </p>
+    
+    <p class="order-intro__text">
+        Transaction ID: {{ order.transaction_id }}
+    </p>
+</div>
+
+<div class="container" style="padding-bottom: 100px;">
+    <div class="order-inner" style="display: flex; justify-content: space-between; padding: 100px 0; ">
+        <div class="order-left">
+            <h3 class="order-left__title" style="margin-bottom: 30px;">
+                Your order details
+            </h3>
+    
+            <div class="order-left__products" style="margin-bottom: 30px;">
+                {% for order_item in order_items %}
+                
+                <div class="order-left__products-item">
+                    <div class="order-left__products__inner" style="display: flex; justify-content: space-between;">
+                        <div class="order-left__products_img">
+                            <img src="{{ order_item.product.main_image.url }}" alt="" style="width:55px; height: 85px;">
+                        </div>
+
+                        <div class="order-left__products__info" style="min-width: 230px;">
+                            <div class="order-left__products__info_inner"style="display: flex; justify-content: space-between;">
+                                <div class="order-left__products__info-item">
+                                    <h3 style="font-size: 10px;">
+                                        Product Name
+                                    </h3>
+                                    <p>
+                                        {{ order_item.product.product_name }}
+                                    </p>
+                                </div>
+
+                                <div class="order-left__products__info-item">
+                                    <h3 style="font-size: 10px;">
+                                        Quantity
+                                    </h3>
+                                    <p>
+                                        {{ order_item.quantity }}
+                                    </p>
+                                </div>
+
+                                <div class="order-left__products__info-item">
+                                    <h3 style="font-size: 10px;">
+                                        Price
+                                    </h3>
+                                    <p>
+                                        ${{ order_item.product.price }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% endfor %}
+            </div>
+    
+    
+            <div class="order-left__inner" style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0,0,0,0.2); border-top: 1px solid rgba(0,0,0,0.2); padding: 10px 0;">
+                <div class="order__inner-left">
+                    <p class="order-left__text">
+                        Subtotal
+                    </p>
+                    
+                    <p class="order-left__text">
+                        Shipping 
+                    </p>
+                </div>
+    
+                <div class="order__inner-right">
+                    <p class="order-left__text">
+                        ${{ subtotal }}
+                    </p>
+                    
+                    <p class="order-left__text">
+                        ${{ order.shipping_price }}
+                    </p>
+                </div>
+            </div>
+    
+            <div class="order-left__total" style="display: flex; justify-content: space-between;">
+                <p class="order-left__text" style="font-weight: bold;">
+                    TOTAL
+                </p>
+    
+                <p class="order-left__title" style="font-weight: bold;">
+                    ${{ total }}
+                </p>
+            </div>
+            
+        </div>
+    
+        <div class="order-right">
+            <div class="order-right__inner" style="display: flex; justify-content: space-between;">
+                <div class="order-right__order-info" style="margin-right: 150px;">
+                    <h3 class="order-right__title" style="margin-bottom: 30px;">
+                        Summery
+                    </h3>
+                    <p class="order-right__text">
+                        Order ID: {{ order.order_number }}
+                    </p>
+        
+                    <p class="order-right__text">
+                        Order Date: {{ order.ship_date }}
+                    </p>
+        
+                    <p class="order-right__text">
+                        Order Total: {{ total }}
+                    </p>
+                </div>
+        
+                <div class="order-right__shipping-info" style="max-width: 300px;">
+                    <h3 class="order-right__title" style="margin-bottom: 30px;">
+                        Shipping Address
+                    </h3>
+                    <p class="order-right__text">
+                        {{ order.shipping.address|truncatechars:20 }}
+                    </p>
+                    <p class="order-right__text">
+                        {{ order.shipping.city|truncatechars:20 }}
+                    </p>
+                    <p class="order-right__text">
+                        {{ order.shipping.country|truncatechars:20 }}
+                    </p>
+                    <p class="order-right__text">
+                        Contact No. {{ order.shipping.phone|truncatechars:20 }}
+                    </p>
+                </div>
+            </div>
+    
+            <h3 class="order-right__title" style="margin-bottom: 30px;">
+                Payment Method
+            </h3>
+            <p class="order-right__text">
+                {% if order.payment == None %}
+                    PayPal
+                {% else %}
+                    {{ order.payment }}
+                {% endif %}
+            </p>
+    
+            <p class="order-right__text">
+                EXPECTED Date Of Delivery
+            </p>
+    
+            <p class="order-right__text" style="font-weight: bold; font-size: 22px">
+                {{ order.delivery_date }}
+            </p>
+        </div>
+    </div>
+    <div class="btns" style="max-width: 350px; margin: 0 auto;">
+        <a href="{% url 'products:products' %}" class="btn">continue shopping</a>
+    </div>
+</div>
+
+{% endblock html %}
+

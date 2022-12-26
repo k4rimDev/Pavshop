@@ -1,0 +1,249 @@
+{% extends 'base.html' %} {% load static %} {% load widget_tweaks %} {% block content %}
+
+<!--======= SUB BANNER =========-->
+<section class="sub-bnr" data-stellar-background-ratio="0.5" style="background: url('{{ background.url }}')">
+  <div class="position-center-center">
+    <div class="container">
+      <h4>PAVSHOP blog list</h4>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus
+        maximus vehicula. Sed feugiat, tellus vel tristique posuere, diam
+      </p>
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">BLOG</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- Content -->
+<div id="content">
+  <!-- Blog List -->
+  <section class="blog-list blog-list-3 padding-top-100 padding-bottom-100">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+        {% if searched_blog.count > 0 %}
+          {% for blog in searched_blog %}
+            <!-- Article -->
+            <article>
+              <div class="row">
+                <div class="col-sm-5">
+                  <!-- Post Img -->
+                  <img
+                    class="img-responsive"
+                    src="{{ blog.image.url }}"
+                    alt=""
+                  />
+                </div>
+                <div class="col-sm-7">
+                  <!-- Tittle -->
+                  <div class="post-tittle left">
+                    <a href="{{ blog.get_absolute_url }}" class="tittle">{{ blog.title }}</a>
+                    <!-- Post Info -->
+                    <span><i class="primary-color icon-user"></i> by {{ blog.author }} </span>
+                    <span><i class="primary-color icon-calendar"></i> {{ blog.created_at|date:"F j, Y" }} </span>
+
+                      <span><i class="primary-color icon-bubble"></i>{{ blog.comments.count }}</span>
+              
+
+                  <span><i class="primary-color icon-tag"></i> {{ blog.category }}</span>
+                  </div>
+                  <!-- Post Content -->
+                  <div class="text-left">
+                    <p style="word-break: break-all;">
+                      {{ blog.text }}
+                    </p>
+                    {% comment %} {% url 'blog:blog-detail' blog.slug %} {% endcomment %}
+                    <a href="{{ blog.get_absolute_url }}" class="red-more">READ MORE</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        {% elif searched_blog.count == 0 %}
+        <p class="text-center"> Blog not found </p>
+        {% else %}
+            {% for blog in page_obj %}
+              <!-- Article -->
+              <article>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <!-- Post Img -->
+                    <img
+                      class="img-responsive"
+                      src="{{ blog.image.url }}"
+                      alt=""
+                      width = 370
+                      height = 325
+                    />
+                  </div>
+                  <div class="col-sm-8">
+                    <!-- Tittle -->
+                    <div class="post-tittle left">
+                      <a href="{{ blog.get_absolute_url }}" class="tittle">{{ blog.title }}</a>
+                      <!-- Post Info -->
+                      <span><i class="primary-color icon-user"></i> by {{ blog.author }}</span>
+                      <span
+                        ><i class="primary-color icon-calendar"></i> {{ blog.created_at|date:"F j, Y" }} </span>
+                   
+                        <span><i class="primary-color icon-bubble"></i> {{ blog.comments.count }}</span>
+
+                      
+                      <span><i class="primary-color icon-tag"></i> {{ blog.category }}</span>
+                    </div>
+                    <!-- Post Content -->
+                    <div class="text-left">
+                      <p style="word-break: break-all;"=>
+                        {{ blog.text|safe|truncatechars:200 }}
+                      </p>
+                      {% comment %} {% url 'blog:blog-detail' blog.slug %} {% endcomment %}
+                      <a href="{{ blog.get_absolute_url }}" class="red-more">READ MORE</a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+          {% endfor %}
+        {% endif %}
+          
+
+
+
+          <!-- Pagination -->
+          <ul class="pagination in-center">
+            {% if page_obj.has_previous %}
+            <li><a href="?page=1">&laquo;</a></li>
+            <li>
+              <a href="?page={{ page_obj.previous_page_number }}"
+                ><i class="fa fa-angle-left"></i
+              ></a>
+            </li>
+            {% endif %} 
+            {% for page in page_obj.paginator.page_range %} 
+              {% if page == page_obj.number %}
+                <li class="active">
+                  <a href="?page={{page}}">{{page}}</a>
+                </li>
+              {% else %}
+                <li><a href="?page={{page}}">{{page}}</a></li>
+              {% endif %} 
+            {% endfor %} 
+            {% if page_obj.has_next %}
+            <li>
+              <a href="?page={{ page_obj.next_page_number }}"
+                ><i class="fa fa-angle-right"></i
+              ></a>
+            </li>
+            <li>
+              <a href="?page={{ page_obj.paginator.num_pages }}">
+                &raquo;</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <!-- Sider Bar -->
+        <div class="col-md-3">
+          <!-- SEARCH -->
+          <form class="search" method="get" id="search-form">
+            {% comment %} {% csrf_token %} {% endcomment %}
+            {% comment %} <input name='a'> {% endcomment %}
+            {% comment %} {% render_field search_blog_form.search_text name='a' %} {% endcomment %}
+            {{ search_blog_form.search_text }}
+            {% comment %} {{ search_blog_form.search_text }} {% endcomment %}
+            <button class = "search-btn" type="submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div class="shop-sidebar">
+
+            <!-- Category -->
+            <h5 class="shop-tittle margin-bottom-30">category</h5>
+            <ul class="shop-cate">
+              {% for category in categories %}
+                <li>
+                  <a href="{{ category.id }}"><span>{{ category }}</span></a>
+                </li>
+              {% endfor %}
+            </ul>
+
+
+            <!-- TAGS -->
+            <h5 class="shop-tittle margin-top-60 margin-bottom-30">
+              PAUPLAR TAGS
+            </h5>
+            <ul class="shop-tags">
+              {% for tag in tags %}
+                <li><a href="{{tag.id}}">{{ tag }}</a></li>
+              {% endfor %}
+            </ul>
+
+            <!-- BRAND -->
+            <h5 class="shop-tittle margin-top-60 margin-bottom-30">archives</h5>
+            <ul class="shop-cate">
+              <li><a href="#."> January 2015 </a></li>
+              <li><a href="#."> February 2015 </a></li>
+              <li><a href="#."> March 2015 </a></li>
+              <li><a href="#."> April 2015 </a></li>
+              <li><a href="#."> May 2015 </a></li>
+            </ul>
+            
+                        <!-- Recent Post -->
+                        <h5 class="shop-tittle margin-top-60 margin-bottom-30">
+                          recent post
+                        </h5>
+                        <ul class="papu-post margin-top-20">
+                          {% for recent_blog in recent_blogs %}
+                            <li class="media">
+                              <div class="media-left">
+                                <a href="{{ recent_blog.get_absolute_url }}">
+                                  <img class="media-object" src="{{ recent_blog.image.url }}" alt=""
+                                /></a>
+                              </div>
+                              <div class="media-body">
+                                <a class="media-heading" href="{{ recent_blog.get_absolute_url }}"
+                                  >{{ recent_blog.title }}</a
+                                >
+                                <span>Posted on {{ recent_blog.created_at|date:'M j' }}</span>
+                              </div>
+                            </li>
+                          {% endfor %}
+                        </ul>
+            
+            <!-- SIDE BACR BANER -->
+            <div class="side-bnr margin-top-100">
+              <img class="img-responsive" src="{{ new_product.main_image.url }}" alt="" />
+              <div class="position-center-center">
+                <span class="price"><small>$</small>{{ new_product.price }}</span>
+                <div class="bnr-text"><a href="{{ new_product.id }}">look hot with style</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Culture BLOCK -->
+  <section class="cultur-block">
+    <ul>
+      <li><img src="{% static 'images/cultur-img-1.jpg' %}" alt="" /></li>
+      <li><img src="{% static 'images/cultur-img-2.jpg' %}" alt="" /></li>
+      <li><img src="{% static 'images/cultur-img-3.jpg' %}" alt="" /></li>
+      <li><img src="{% static 'images/cultur-img-4.jpg' %}" alt="" /></li>
+    </ul>
+
+    <!-- Culture Text -->
+    <div class="position-center-center">
+      <div class="container">
+        <div class="col-sm-6 center-block">
+          <h4>FOLLOW US @ INSTAGRAM</h4>
+          <p>
+            Phasellus lacinia fermentutm bibendum. Interdum et malante ipuctus
+            non. Nulla lacinia, eros vel fermentum consectetur, ris dolor in ex.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %} {% block js_files %} {% endblock %}

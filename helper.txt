@@ -1,0 +1,17 @@
+Db backup: docker exec -t pavshop_db pg_dumpall -c -U pavshop > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql 
+Celery: python -m celery -A pavshop worker
+Celery run command -> celery -A pavshop worker -l INFO  
+Celery run task command -> celery -A pavshop beat -l INFO 
+
+get cotainer_id:
+    docker ps -aqf "name=pavshop_db" 
+
+command1:
+    cat dump_23-10-2022_19_46_56.sql | docker exec -i ac1a148b2813 psql -U postgres
+
+command2: 
+    docker exec -i ac1a148b2813 /bin/bash -c "PGPASSWORD=123 psql --username pavshop pavshop_db" < /Users/kerimmirzequliyev/Desktop/VapShop/E-commerce-Pavshop-Wolves/src/dump_25-11-2022_15_37_32.sql
+
+error:
+    psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+        Is the server running locally and accepting connections on that socket?

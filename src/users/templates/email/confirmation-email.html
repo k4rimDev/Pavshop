@@ -1,0 +1,7 @@
+{% autoescape off %}
+Hello, {{ user.get_full_name }},
+
+Please, confirm your registration by clicking the following address:
+
+<a href="{{ redirect_url }}">Click Here</a>
+{% endautoescape %}

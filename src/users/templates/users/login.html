@@ -1,0 +1,170 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+  {% include 'users/_partials/_user-header.html' %}
+  
+  <!-- Content -->
+  <div id="content"> 
+    
+    <!--======= PAGES INNER =========-->
+    <section class="chart-page padding-top-100 padding-bottom-100">
+      <div class="container"> 
+        
+        <!-- Payments Steps -->
+        <div class="shopping-cart"> 
+          
+          <!-- SHOPPING INFORMATION -->
+          <div class="cart-ship-info">
+            <div class="row"> 
+              
+              <!-- ESTIMATE SHIPPING & TAX -->
+              <div class="col-sm-7">
+                <h6>LOGIN YOUR ACCOUNT</h6>
+                <form action="{% url 'users:login' %}" method = 'post' id="login-form">
+                  {% csrf_token %}
+                  <ul class="row">
+                    
+                    <!-- Name -->
+                    <li class="col-md-12">
+                      <label> USERNAME
+                        {% comment %} <input type="text" name="first-name" value="" placeholder=""> {% endcomment %}
+                        {{ login_form.username }}
+                      </label>
+                    </li>
+                    <!-- LAST NAME -->
+                    <li class="col-md-12">
+                      <label> PASSWORD
+                        {% comment %} <input type="password" name="last-name" value="" placeholder=""> {% endcomment %}
+                        {{ login_form.password }}
+                      </label>
+                    </li>
+                    
+                    <!-- LOGIN -->
+                    <li class="col-md-4">
+                      <button type="submit" class="btn">LOGIN</button>
+                    </li>
+                    
+                    <!-- CREATE AN ACCOUNT -->
+                    <p class="text-center">Don't have an account? <a href="register">Create an account</a>.</p>
+                    
+                    <!-- STAY LOGGED IN -->
+                    <li class="col-md-4">
+                      <div class="checkbox margin-0 margin-top-20">
+                        <input id="checkbox1" class="styled" type="checkbox">
+                        <label for="checkbox1"> Stay me Login</label>
+                      </div>
+                    </li>
+                    
+                    <!-- FORGET PASS -->
+                    <li class="col-md-4">
+                      <div class="checkbox margin-0 margin-top-20 text-right">
+                        <a href="{% url 'users:password_reset' %}">Forget Password</a>
+                      </div>
+                    </li>
+                  </ul>
+                </form>
+                
+              </div>
+              
+              <!-- SUB TOTAL -->
+              <div class="col-sm-5">
+                <h6>LOGIN WITH</h6>
+                
+                <ul class="login-with">
+                	<li>
+                    	<a href="{% url 'social:begin' 'facebook' %}"><i class="fa fa-facebook"></i>FACEBOOK</a>
+                    
+                    </li>
+                    
+                    <li>
+                    	<a href="{% url 'social:begin' 'google-oauth2' %}"><i class="fa fa-google"></i>GOOGLE</a>
+                    
+                    </li>
+                    
+                    <li>
+                    	<a href="{% url 'social:begin' 'twitter' %}"><i class="fa fa-twitter"></i>TWITTER</a>
+                    
+                    </li>
+                
+                </ul>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- About -->
+    <section class="small-about padding-top-150 padding-bottom-150">
+      <div class="container"> 
+        
+        <!-- Main Heading -->
+        <div class="heading text-center">
+          <h4>about PAVSHOP</h4>
+          <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia,
+            eros vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in ex. </p>
+        </div>
+        
+        <!-- Social Icons -->
+        <ul class="social_icons">
+          <li><a href="#."><i class="icon-social-facebook"></i></a></li>
+          <li><a href="#."><i class="icon-social-twitter"></i></a></li>
+          <li><a href="#."><i class="icon-social-tumblr"></i></a></li>
+          <li><a href="#."><i class="icon-social-youtube"></i></a></li>
+          <li><a href="#."><i class="icon-social-dribbble"></i></a></li>
+        </ul>
+      </div>
+    </section>
+    
+    {% block js_files %}
+
+      <script>
+        $("#login-form")[0].addEventListener('submit', (e) => {
+          let csrftoken = $("input[name=csrfmiddlewaretoken]").val();
+          
+          let formData = {
+              'username': $("#id_username").val(),
+              'password': $("#id_password").val(),
+              'csrfmiddlewaretoken': '{% csrf_token %}'
+          }
+      
+          fetch('http://127.0.0.1:8000/api/user/login', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': csrftoken,
+              },
+              body: JSON.stringify(formData)
+          })
+              .then(response => response.json())
+              .then(data => {
+                  if (data) {
+                    document.cookie ='token=' + JSON.stringify({"token": data.token}) + ";domain=;path=/";
+                    $.ajax({
+                      method: "POST",
+                      url: "{% url 'users:login' %}",
+                      data: {
+                        csrfmiddlewaretoken: csrftoken,
+                        data: formData,
+                        },
+                      success: function (response) {
+                          $("#login-form").trigger('reset');
+                      },
+                      error: function (response) {
+                          // alert the error if any error occured
+                          alert("Error");
+                      }
+                    })
+                  } else {
+                      alert('Username OR password did not work')
+                  }
+              }) 
+            }) 
+      </script>
+
+    {% endblock js_files %}
+    
+  {% endblock %}

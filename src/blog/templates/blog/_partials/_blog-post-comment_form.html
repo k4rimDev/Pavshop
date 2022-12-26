@@ -1,0 +1,46 @@
+{% load widget_tweaks %}
+<h5 class="shop-tittle margin-top-80">POST YOUR COMMENTS</h5>
+<form class="padding-left-15" method="POST" id="comment-form">
+    {{ comment_form.comment }}
+    {% render_field comment_form.parent value=comment %}
+    {% csrf_token %}
+    <ul class="row">
+
+
+            <li class="col-sm-4">
+                <label>
+                    {{ comment_form.name.label }}
+                    {{ comment_form.name }}
+                </label>
+            </li>
+
+            <li class="col-sm-4">
+                <label>
+                    {{ comment_form.email.label }}
+                    {{ comment_form.email }}
+                </label>
+            </li>
+
+
+        <li class="col-sm-4">
+            <label>
+                {{ comment_form.subject.label }}
+                {{ comment_form.subject }}
+            </label>
+        </li>
+
+        <li class="col-sm-12">
+            <label>
+                {{ comment_form.comment_text.label }}
+                {{ comment_form.comment_text }}
+            </label>
+        </li>
+        
+        <li class="col-sm-12">
+            <button type="submit" class="btn margin-top-30">
+                Submit Comment
+            </button>
+        </li>
+    </ul>
+
+</form>

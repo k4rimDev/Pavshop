@@ -1,0 +1,340 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!--======= SUB BANNER =========-->
+<section
+  class="sub-bnr"
+  data-stellar-background-ratio="0.5"
+  style="background: url({{ order_image.url }}) no-repeat;"
+>
+  <div class="position-center-center">
+    <div class="container">
+      <h4>CHECKOUT</h4>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus
+        maximus vehicula. Sed feugiat, tellus vel tristique posuere, diam
+      </p>
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">SHOP</a></li>
+        <li class="active">CHECKOUT</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- Content -->
+<div id="content">
+  <!--======= PAGES INNER =========-->
+  <section class="chart-page padding-top-100 padding-bottom-100">
+    <div class="container">
+      <!-- Payments Steps -->
+      <div class="shopping-cart">
+        <!-- SHOPPING INFORMATION -->
+        <div class="cart-ship-info">
+          <div class="row">
+            <!-- ESTIMATE SHIPPING & TAX -->
+            <div class="col-sm-7">
+              <h6>BILLING DETAILS</h6>
+
+              {% include 'order/_partials/_billing-details_form.html' with billing_form=billing_form %}
+
+              <!-- SHIPPING info -->
+              <h6 class="margin-top-50">SHIPPING info</h6>
+
+              {% include 'order/_partials/_checkout-shipping_form.html' with shipping_form=shipping_form %}
+            </div>
+
+            <!-- SUB TOTAL -->
+            <div class="col-sm-5">
+              <h6>YOUR ORDER</h6>
+              <div class="order-place">
+                <div class="order-detail">
+                  {% for item in items %}
+                  <p>
+                    {{ item.product.product_name }}
+                    <span>${{ item.product.price }} </span>
+                  </p>
+                  {% endfor %}
+
+                  <!-- SUB TOTAL -->
+                  <p class="all-total">
+                    TOTAL COST <span> ${{ cart_total }}</span>
+                  </p>
+                </div>
+                <div class="pay-meth">
+                  <form method="post">
+                    {% csrf_token %}
+                    <input
+                      type="hidden"
+                      name="order_form"
+                      value="True"
+                      id="id_order_form"
+                    />
+                    <ul>
+                      <li>
+                        <div class="radio">
+                          <input
+                            type="radio"
+                            name="radio1"
+                            id="radio1"
+                            value="DIRECT BANK TRANSFER"
+                            checked
+                          />
+                          <label for="radio1"> DIRECT BANK TRANSFER </label>
+                        </div>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Nullam erat turpis, pellentesque non leo eget,
+                          pulvinar pretium arcu. Mauris porta elit non.
+                        </p>
+                      </li>
+
+                      <li>
+                        <div class="radio">
+                          <input
+                            type="radio"
+                            name="radio1"
+                            id="radio2"
+                            value="CASH ON DELIVERY"
+                          />
+                          <label for="radio2"> CASH ON DELIVERY</label>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div class="radio">
+                          <input
+                            type="radio"
+                            name="radio1"
+                            id="radio3"
+                            value="CHEQUE PAYMENT"
+                          />
+                          <label for="radio3"> CHEQUE PAYMENT </label>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div class="radio">
+                          <input
+                            type="radio"
+                            name="radio1"
+                            id="radio4"
+                            value="PAYPAL"
+                          />
+                          <label for="radio4"> PAYPAL </label>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div class="checkbox">
+                          <input
+                            id="checkbox3-4"
+                            class="styled"
+                            type="checkbox"
+                          />
+                          <label for="checkbox3-4">
+                            I’VE READ AND ACCEPT THE
+                            <a href="{% url 'terms' %}"
+                              ><span class="color">TERMS & CONDITIONS</span></a
+                            >
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                    <button
+                      type="submit"
+                      class="btn btn-dark pull-right margin-top-30"
+                      id="payment-btn"
+                    >
+                      PLACE ORDER
+                    </button>
+                    <div
+                      id="paypal-button-container"
+                      style="display: none"
+                    ></div>
+                  </form>
+                </div>
+              </div>
+
+              <div class="col-sm-7" style="margin-top: 30px; width: 100%;">
+                <h6>DISCOUNT CODE</h6>
+                <form method="post" style="width: 100%;">
+                  <input
+                    type="text"
+                    value=""
+                    placeholder="ENTER YOUR CODE IF YOU HAVE ONE"
+                    style="margin-bottom: 30px;"
+                  />
+                  <button type="submit" class="btn btn-small btn-dark">
+                    APPLY CODE
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="small-about padding-top-150 padding-bottom-150">
+    <div class="container">
+      <!-- Main Heading -->
+      <div class="heading text-center">
+        <h4>about PAVSHOP</h4>
+        <p>
+          Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac
+          ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia, eros
+          vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in
+          ex.
+        </p>
+      </div>
+
+      <!-- Social Icons -->
+      <ul class="social_icons">
+        <li>
+          <a href="#."><i class="icon-social-facebook"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-twitter"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-tumblr"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-youtube"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-dribbble"></i></a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=AR9pDHs7UiP72qpmGmadxMNIcmX-b4FDXaZJ4SJEdwTuY41bvoCRx4ftLjpOkgrmwhG_4sffKxSq72aX&currency=USD"></script>
+
+  <script>
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+      var csrftoken = getCookie("csrftoken")
+      var total = '{{total}}';
+      function completeOrder(){
+        var url = "{% url 'payment_complete_paypal' %}"
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken
+          },
+          body: JSON.stringify({})
+        })
+      }
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+          {% comment %} var cartTotal = '{{ cart_total }}';
+          console.log(cartTotal) {% endcomment %}
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '0.01'
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(orderData) {
+                    // Successful capture! For demo purposes:
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    // var transaction = orderData.purchase_units[0].payments.captures[0];
+                    // alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                    completeOrder();
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+  </script>
+
+  <script>
+    var paymentBtn = document.getElementById("payment-btn");
+    var paypalBtn = document.getElementById("paypal-button-container");
+    var billingForm = document.getElementById("billing-info-form");
+    var shippingForm = document.getElementById("shipping-form").elements;
+    var checkbox = document.getElementById("checkbox3-4");
+    var addAnotherAddressBtn = document.getElementById("checkbox1");
+
+    var radios = document.querySelectorAll('input[name="radio1"]');
+
+    radios.forEach((radio) => {
+      radio.addEventListener("click", function () {
+        if (this.checked) {
+          if (this.value == "PAYPAL") {
+            paypalBtn.style.display = "block";
+            paymentBtn.style.display = "none";
+          } else {
+            console.log("it is not paypal");
+            paypalBtn.style.display = "none";
+            paymentBtn.style.display = "block";
+          }
+        }
+      });
+    });
+
+    paymentBtn.originalLink = paymentBtn.href;
+    paymentBtn.href = "javascript:void(0)";
+    paymentBtn.style.cursor = "no-drop";
+
+    // default form settings
+    addAnotherAddressBtn.addEventListener("change", function () {
+      if (this.checked) {
+        shippingForm["company_name"].removeAttribute("disabled");
+        shippingForm["address"].removeAttribute("disabled");
+        shippingForm["city"].removeAttribute("disabled");
+        shippingForm["country"].removeAttribute("disabled");
+        shippingForm["zipcode"].removeAttribute("disabled");
+        shippingForm["phone"].removeAttribute("disabled");
+      } else {
+        shippingForm["company_name"].setAttribute("disabled", "true");
+        shippingForm["address"].setAttribute("disabled", "true");
+        shippingForm["city"].setAttribute("disabled", "true");
+        shippingForm["country"].setAttribute("disabled", "true");
+        shippingForm["zipcode"].setAttribute("disabled", "true");
+        shippingForm["phone"].setAttribute("disabled", "true");
+      }
+    });
+
+    checkbox.addEventListener("change", function () {
+      if (this.checked) {
+        paymentBtn.href = paymentBtn.originalLink;
+        paymentBtn.style.cursor = "pointer";
+      } else {
+        paymentBtn.href = "javascript:void(0)";
+        paymentBtn.style.cursor = "no-drop";
+      }
+    });
+  </script>
+
+  {% endblock %} {% block js_files %} {% endblock %}
+</div>

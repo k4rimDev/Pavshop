@@ -1,0 +1,206 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: templates/base.html:161 templates/base.html:162 templates/base.html:584
+#: templates/base.html:597 templates/base.html:602
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-11 23:39+0400\n"
+"PO-Revision-Date: 2022-09-16 16:25+0400\n"
+"Last-Translator:   <admin@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: core/templates/core/index.html:51 core/templates/core/index.html:188
+msgid "The Latest Product from PAVSHOP"
+msgstr "PAVSHOP-dan Ən Son Məhsul"
+
+#: core/templates/core/index.html:101
+msgid "featured"
+msgstr ""
+
+#: core/templates/core/index.html:126
+msgid "cycle"
+msgstr ""
+
+#: core/templates/core/index.html:144
+msgid "SHOP NOW"
+msgstr "İndi alış-veriş edin"
+
+#: core/templates/core/index.html:238
+msgid "this season"
+msgstr "bu sezon"
+
+#: core/templates/core/index.html:281
+msgid "BUY NOW"
+msgstr "İndi al"
+
+#: core/templates/core/index.html:296
+msgid "new arrival"
+msgstr ""
+
+#: core/templates/core/index.html:736
+msgid "about PAVSHOP"
+msgstr ""
+
+#: order/models.py:127
+msgid "kartla"
+msgstr ""
+
+#: order/models.py:128
+msgid "nağd"
+msgstr ""
+
+#: pavshop/settings.py:262
+msgid "English"
+msgstr ""
+
+#: pavshop/settings.py:263
+msgid "Russian"
+msgstr ""
+
+#: pavshop/settings.py:264
+msgid "Azerbaijani"
+msgstr ""
+
+#: templates/base.html:173
+msgid "Shop Pages"
+msgstr ""
+
+#: templates/base.html:189
+msgid "Shopping Cart"
+msgstr ""
+
+#: templates/base.html:191 templates/base.html:603
+msgid "Checkout"
+msgstr ""
+
+#: templates/base.html:279
+msgid "NEW ARRIVAL 2016"
+msgstr ""
+
+#: templates/base.html:279
+msgid "Best Collection"
+msgstr ""
+
+#: templates/base.html:299
+msgid "contact"
+msgstr ""
+
+#: templates/base.html:320
+msgid "HELLO!"
+msgstr ""
+
+#: templates/base.html:322
+msgid "MY CART"
+msgstr ""
+
+#: templates/base.html:323
+msgid "ACCOUNT INFO"
+msgstr ""
+
+#: templates/base.html:324
+msgid "LOG OUT"
+msgstr ""
+
+#: templates/base.html:330
+msgid "LOGIN"
+msgstr ""
+
+#: templates/base.html:334
+msgid "SIGNUP"
+msgstr ""
+
+#: templates/base.html:385 templates/base.html:437
+msgid "VIEW CART"
+msgstr ""
+
+#: templates/base.html:389 templates/base.html:441
+msgid "CHECK OUT"
+msgstr ""
+
+#: templates/base.html:529 templates/partials/_newsletter.html:5
+msgid "NEWSLETTER"
+msgstr ""
+
+#: templates/base.html:543 templates/partials/_newsletter.html:13
+msgid "SEND ME"
+msgstr ""
+
+#: templates/base.html:561
+msgid "Street No. 12, Newyork 12,"
+msgstr ""
+
+#: templates/base.html:571
+msgid "HELPFUL LINKS"
+msgstr ""
+
+#: templates/base.html:573
+msgid "Products"
+msgstr ""
+
+#: templates/base.html:574
+msgid "Find a Store"
+msgstr ""
+
+#: templates/base.html:575
+msgid "Features"
+msgstr ""
+
+#: templates/base.html:576
+msgid "Privacy Policy"
+msgstr ""
+
+#: templates/base.html:578
+msgid "Press Kit "
+msgstr ""
+
+#: templates/base.html:586
+msgid "About Us"
+msgstr ""
+
+#: templates/base.html:587
+msgid "Career"
+msgstr ""
+
+#: templates/base.html:588
+msgid "Shipping Methods"
+msgstr ""
+
+#: templates/base.html:589
+msgid "Contact"
+msgstr ""
+
+#: templates/base.html:590
+msgid "Support"
+msgstr ""
+
+#: templates/base.html:591
+msgid "Retailer"
+msgstr ""
+
+#: templates/base.html:599
+msgid "Login"
+msgstr ""
+
+#: templates/base.html:600
+msgid "My Account"
+msgstr ""
+
+#: templates/base.html:601
+msgid "My Cart"
+msgstr ""
+
+#: templates/base.html:609
+msgid "PAVSHOP All right reserved."
+msgstr ""

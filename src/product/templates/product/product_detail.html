@@ -1,0 +1,284 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+
+  <!--======= SUB BANNER =========-->
+  <section class="sub-bnr" data-stellar-background-ratio="0.5" style="background: url({{ product.category_id.category_image.url }}) no-repeat;">
+    <div class="position-center-center">
+      <div class="container">
+        <h4>{{ product.product_name }}</h4>
+        <p>{{ product.brief_info }}</p>
+        <ol class="breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li class="active">{{ product.product_name }}</li>
+        </ol>
+      </div>
+    </div>  
+  </section>
+  
+  <!-- Content -->
+  <div id="content"> 
+    
+    <!-- Popular Products -->
+    <section class="padding-top-100 padding-bottom-100">
+      <div class="container"> 
+        
+        <!-- SHOP DETAIL -->
+        <div class="shop-detail">
+          <div class="row"> 
+            
+            <!-- Popular Images Slider -->
+            <div class="col-md-7"> 
+              
+              <!-- Images Slider -->
+              <div class="images-slider">
+                <ul class="slides">
+                  {% for product_image in image %}
+                  <li data-thumb='{{ product_image.image.url }}'> <img class="img-responsive" src='{{ product_image.image.url }}' alt=""> </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            
+            <!-- COntent -->
+            <div class="col-md-5">
+              <h4>{{ product.product_name }}</h4>
+              <span class="price"><small>$</small>{{ product.price }}</span> 
+              
+              <!-- Sale Tags -->
+              {% if product.discount_status %}
+              <div class="on-sale"> {{ product.discount_percent }}% <span>OFF</span> </div>
+              {% endif %}
+              <ul class="item-owner">
+                <li>Designer :<span> {{ product.designer }}</span></li>
+                <li>Brand:<span> {{ product.brand }}</span></li>
+              </ul>
+              
+              <!-- Item Detail -->
+              <p>{{ product.product_detail }}</p>
+              
+              <!-- Sort By -->
+              <div class="some-info">
+                <ul class="row margin-top-30">
+                  <li class="col-xs-4">
+                    <div class="quinty"> 
+                      <!-- QTY -->
+                      <select class="selectpicker">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                      </select>
+                    </div>
+                  </li>
+                  
+                  <!-- COLORS -->
+                  <li class="col-xs-8">
+                    
+                    <ul class="colors-shop">
+                      {% for color in colors %}
+                        <li><a href="#." style="background:{{color.0}};" data-color='{{color.1}}' class='specProductColor'></a></li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                  
+                  <!-- ADD TO CART -->
+                  <li class="col-xs-6"> <a data-product={{ product.id }} data-action="add" href="#." data-color="" class="btn update-basket">ADD TO CART</a> </li>
+                  
+                  <!-- LIKE -->
+                  <li class="col-xs-6"> <a href="#." class="like-us update-whislist" data-product="{{ product.id }}"><i class="icon-heart"></i></a> </li>
+                </ul>
+                
+                <!-- INFOMATION -->
+                <div class="inner-info">
+                  <h6>DELIVERY INFORMATION</h6>
+                  <p>{{ product.delivery_info }}</p>
+                  <h6>SHIPPING & RETURNS</h6>
+                  <h6>SHARE THIS PRODUCT</h6>
+                  
+                  <!-- Social Icons -->
+                  <ul class="social_icons">
+                    <li><a href="#."><i class="icon-social-facebook"></i></a></li>
+                    <li><a href="#."><i class="icon-social-twitter"></i></a></li>
+                    <li><a href="#."><i class="icon-social-tumblr"></i></a></li>
+                    <li><a href="#."><i class="icon-social-youtube"></i></a></li>
+                    <li><a href="#."><i class="icon-social-dribbble"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!--======= PRODUCT DESCRIPTION =========-->
+        <div class="item-decribe"> 
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs animate fadeInUp" data-wow-delay="0.4s" role="tablist">
+            <li role="presentation" class="active"><a href="#descr" role="tab" data-toggle="tab">DESCRIPTION</a></li>
+            <li role="presentation"><a href="#review" role="tab" data-toggle="tab"> {% if reviews.count < 10 and reviews.count != 0 %} REVIEW (0{{ reviews.count }}) {% elif reviews.count > 9 %} REVIEW ({{ reviews.count }}) {% else %} REVIEW (0) {% endif %}</a></li>
+            <li role="presentation"><a href="#tags" role="tab" data-toggle="tab">INFORMATION</a></li >
+          </ul>
+          
+          <!-- Tab panes -->
+          <div class="tab-content animate fadeInUp" data-wow-delay="0.4s"> 
+            <!-- DESCRIPTION -->
+            <div role="tabpanel" class="tab-pane fade in active" id="descr">
+              <p>
+                {{ product.product_description }} 
+                <br>
+              </p>
+              <h6>THE SIMPLE FACTS</h6>
+              <ul>
+                <p>
+                  {{ product.product_info|safe }}
+                </p>
+
+              </ul>
+            </div>
+            
+            <!-- REVIEW -->
+            <div role="tabpanel" class="tab-pane fade" id="review">
+              {% if reviews %}
+                {% if reviews.count == 1 %}
+                <h6>{{reviews.count}} REVIEW FOR SHIP YOUR IDEA</h6>
+                {% else %}
+                <h6>{{reviews.count}} REVIEWS FOR SHIP YOUR IDEA</h6>
+                {% endif %}
+                
+                {% for review in reviews %}
+                  <!-- REVIEW PEOPLE -->
+                  <div class="media">
+                    <div class="media-left"> 
+                      <!--  Image -->
+                      <div class="avatar"> <a href="#"> <img class="media-object" src='{% static "images/avatar-1.jpg" %}' alt=""> </a> </div>
+                    </div>
+                    <!--  Details -->
+                    <div class="media-body">
+                      <p class="font-playfair">{{ review.email}}</p>
+                      {% comment %} <h6>{{ review.product_id }} <span class="pull-right">MAY 10, 2016</span> </h6> {% endcomment %}
+                      <h6>“{{ review.review_text }}” <span class="pull-right">{{ review.updated_at|date:"M j, Y" }}</span> </h6>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+              
+              <!-- ADD REVIEW -->
+              <h6 class="margin-t-40">ADD REVIEW</h6>
+              <form method="post">
+                {% csrf_token %}
+                <ul class="row">
+                    <li class="col-sm-6" style="position: relative; z-index:9999999999;">
+                    <label>
+                      {{review_form.name.label}}
+                      {{review_form.name}}
+                      {{review_form.name.error}}  
+                    </label>
+                  </li>
+                  <li class="col-sm-6" style="position: relative; z-index:9999999999;">
+                    <label>
+                      {{review_form.email.label}}
+                      {{review_form.email}}
+                      {{review_form.email.error}}  
+                    </label>
+                  </li>
+                  <li class="col-sm-6" style="position: relative; z-index:9999999999;">
+                    <label>
+                      {{review_form.review_text.label}}
+                      {{review_form.review_text}}
+                      {{review_form.review_text.error}}  
+                    </label>
+                  </li>
+                  <li class="col-sm-6" style="position: relative; z-index:9999999999;">
+                    <label>
+                      {{review_form.product_id}}
+                    </label>
+                  </li>              
+                  <li class="col-sm-6"> 
+                    <!-- Rating Stars -->
+                    <div class="stars" style="position: relative; z-index:9999999999;"> <span>{{review_form.rating.label}}</span>
+                      {{review_form.rating}}
+                      <a class="rating" title="Give 1 stars" data-value="1" onclick="addRating(this)"><i class="fa fa-star"></i></a>
+                      <a class="rating" title="Give 2 stars" data-value="2" onclick="addRating(this)"><i class="fa fa-star"></i></a>
+                      <a class="rating" title="Give 3 stars" data-value="3" onclick="addRating(this)"><i class="fa fa-star"></i></a>
+                      <a class="rating" title="Give 4 stars" data-value="4" onclick="addRating(this)"><i class="fa fa-star"></i></a>
+                      <a class="rating" title="Give 5 stars" data-value="5" onclick="addRating(this)"><i class="fa fa-star"></i></a>
+                      
+                    </div>
+                  </li>
+                  
+                  <li class="col-sm-6">
+                    <button type="submit" name="{{review_form.prefix}}" class="btn btn-dark btn-small pull-right no-margin">POST REVIEW</button>
+                  </li>
+                </ul>
+              </form>
+            </div>
+            
+            <!-- TAGS -->
+            <div role="tabpanel" class="tab-pane fade" id="tags"> </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Popular Products -->
+    <section class="light-gray-bg padding-top-150 padding-bottom-150">
+      <div class="container"> 
+        
+        <!-- Main Heading -->
+        <div class="heading text-center">
+          <h4>YOU MAY LIKE IT</h4>
+          <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus maximus vehicula. 
+          Sed feugiat, tellus vel tristique posuere, diam</span> </div>
+        
+        <!-- Popular Item Slide -->
+        <div class="papular-block block-slide single-img-demos"> 
+          <!-- Item -->
+          {% for similiar_product in similiar_products %}
+          <div class="item"> 
+            <!-- Item img -->
+            <div class="item-img"> <img class="img-1" src='{{ similiar_product.main_image.url }}' alt="{{ similiar_product.product_name }}" > 
+              <!-- Overlay -->
+              <div class="overlay">
+                <div class="position-center-center">
+                  <div class="inn"><a href='{{ similiar_product.main_image.url }}' data-lighter><i class="icon-magnifier"></i></a> <a href="#."><i class="icon-basket"></i></a> <a href="#." class="update-whislist" ><i class="icon-heart"></i></a></div>
+                </div>
+              </div>
+            </div>
+            <!-- Item Name -->
+            <div class="item-name"> <a href="#.">{{similiar_product.product_name}}</a>
+              <p>{{similiar_product.brief_info}}</p>
+            </div>
+            <!-- Price -->  
+            <span class="price"><small>$</small>{{ similiar_product.price }}</span> </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    
+    <!-- About -->
+    <section class="small-about padding-top-150 padding-bottom-150">
+      <div class="container"> 
+        
+        <!-- Main Heading -->
+        <div class="heading text-center">
+          <h4>about PAVSHOP</h4>
+          <p>Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia,
+            eros vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in ex. </p>
+        </div>
+        
+        <!-- Social Icons -->
+        <ul class="social_icons">
+          <li><a href="#."><i class="icon-social-facebook"></i></a></li>
+          <li><a href="#."><i class="icon-social-twitter"></i></a></li>
+          <li><a href="#."><i class="icon-social-tumblr"></i></a></li>
+          <li><a href="#."><i class="icon-social-youtube"></i></a></li>
+          <li><a href="#."><i class="icon-social-dribbble"></i></a></li>
+        </ul>
+      </div>
+    </section>
+    
+    
+{% endblock %}
+{% block js_files %}
+    <script src="{% static 'js/basket.js' %}"></script>
+    <script src="{% static 'js/whislist.js' %}"></script>
+  {% endblock js_files %}

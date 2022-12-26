@@ -1,0 +1,284 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!--======= SUB BANNER =========-->
+{% block css_files %} 
+  <link rel="stylesheet" href="{% static 'css/filter-price.css' %}">
+{% endblock %}
+<section
+  class="sub-bnr"
+  data-stellar-background-ratio="0.5"
+  style="background: url({{ product_bg.url }}) no-repeat;"
+>
+{% csrf_token %}
+  <div class="position-center-center">
+    <div class="container">
+      <h4>PAVSHOP PRODUCTS</h4>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec faucibus
+        maximus vehicula. Sed feugiat, tellus vel tristique posuere, diam
+      </p>
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">Data</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- Content -->
+<div id="content">
+  <!-- Products -->
+  <section class="shop-page padding-top-100 padding-bottom-100">
+    <div class="container">
+      <div class="row">
+        <!-- Item Content -->
+        <div class="col-sm-9">
+          <div class="item-display">
+            <div class="row">
+              <!-- Products Select -->
+              <div class="col-xs-6">
+                <div class="pull-left">
+                  <!-- Sort By -->
+                  <form action="" class="sorting-products" method="get">
+                    <select class="selectpicker sortingProduct" id="filter-sorting">
+                      <option >Sort By</option>
+                      <option name="createdat_asc">Newly added</option>
+                      <option name="createdat_desc">Lastly added</option>
+                      <option name="popularity_desc">Popular products first</option>
+                      <option name="popularity_asc">Popular products at the end</option>
+                      <option name="price_asc">From cheap to expensive</option>
+                      <option name="price_desc">From expensive to cheap</option>
+                    </select>
+                  </form>
+
+                  <!-- GRID & LIST -->
+                  <a href="#." class="grid-style"><i class="icon-grid"></i></a>
+                  <a href="#." class="list-style"><i class="icon-list"></i></a>
+                </div>
+              </div>
+              <div class="col-xs-6 text-right">
+                <span class="product-num"
+                  >Showing of {{products.count}} products</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Popular Item Slide -->
+          <div class="papular-block row single-img-demos" id="productsContainer">
+            <!-- Item -->
+            {% for product in page_obj %}
+            <div class="col-md-4">
+              <div class="item">
+                <!-- Item img -->
+                <div class="item-img">
+                  <img
+                    class="img-1"
+                    src="{{ product.main_image.url }}"
+                    alt=""
+                  />
+                  <!-- Overlay -->
+                  <div class="overlay">
+                    <div class="position-center-center">
+                      <div class="inn">
+                        <a href="{{ product.main_image.url }}" data-lighter
+                          ><i class="icon-magnifier"></i
+                        ></a>
+                        <a
+                          class="update-basket"
+                          href="#."
+                          data-product="{{ product.id }}"
+                          data-action="add"
+                          ><i class="icon-basket"></i
+                        ></a>
+                        <a
+                          class="update-basket"
+                          href="#."
+                          data-product="{{ product.id }}"
+                          data-action="add"
+                          ><i class="icon-basket"></i
+                        ></a>
+                        <a href="#." class="update-whislist" data-product="{{ product.id }}"><i class="icon-heart"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Item Name -->
+                <div class="item-name">
+                  <a href="{% url 'products:product-detail' product.slug %}"
+                    >{{product.product_name}}</a
+                  >
+                  <p>{{product.brief_info}}</p>
+                </div>
+                <!-- Price -->
+                <span class="price"><small>$</small>{{product.price}}</span>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- Pagination -->
+          <ul class="pagination in-center">
+            {% if page_obj.has_previous %}
+            <li><a href="products?page=1">&laquo;</a></li>
+            <li>
+              <a href="products?page={{ page_obj.previous_page_number }}"
+                ><i class="fa fa-angle-left"></i
+              ></a>
+            </li>
+            {% endif %} 
+            {% for page in page_obj.paginator.page_range %} 
+              {% if page == page_obj.number %}
+                <li class="active">
+                  <a href="products?page={{page}}">{{page}}</a>
+                </li>
+              {% else %}
+                <li><a href="products?page={{page}}">{{page}}</a></li>
+              {% endif %} 
+            {% endfor %} 
+            {% if page_obj.has_next %}
+            <li>
+              <a href="products?page={{ page_obj.next_page_number }}"
+                ><i class="fa fa-angle-right"></i
+              ></a>
+            </li>
+            <li>
+              <a href="products?page={{ page_obj.paginator.num_pages }}">
+                &raquo;</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <!-- Shop SideBar -->
+        <div class="col-sm-3">
+          <div class="shop-sidebar">
+            <!-- Category -->
+            <h5 class="shop-tittle margin-bottom-30">category</h5>
+            <ul class="shop-cate" id="shop-category">
+              {% comment %} {% for category in categories %}
+              <li>
+                <a href="#."> {{category.0}} <span>{{category.1}}</span></a>
+              </li>
+              {% endfor %} {% endcomment %}
+            </ul>
+
+            <!-- FILTER BY PRICE -->
+            <h5 class="shop-tittle margin-top-60 margin-bottom-30">
+              FILTER BY PRICE
+            </h5>
+
+            <div class="filter-container">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div id="slider-range"></div>
+                </div>
+              </div>
+              <div class="row slider-labels">
+                <div class="col-xs-6 caption">
+                  <strong>Min:</strong> <span id="slider-range-value1"></span>
+                </div>
+                <div class="col-xs-6 text-right caption">
+                  <strong>Max:</strong> <span id="slider-range-value2"></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <form>
+                    <input type="hidden" name="min-value" value="" class="range-price">
+                    <input type="hidden" name="max-value" value="" class="range-price">
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- COLORS -->
+            <h5 class="shop-tittle margin-top-60 margin-bottom-30">
+              FILTER BY COLORS
+            </h5>
+            <ul class="colors" id="shop-color">
+              {% comment %} {% for color in colors %}
+              <li>
+                <a
+                  href="#."
+                  style="background:{{color.1}};"
+                  data-color-name="{{color.0}}"
+                ></a>
+              </li>
+              {% endfor %} {% endcomment %}
+            </ul>
+
+            <!-- TAGS -->
+            <h5 class="shop-tittle margin-top-60 margin-bottom-30">
+              POPULAR TAGS
+            </h5>
+            <ul class="shop-tags" id="shop-tag">
+              {% comment %} {% for popular_tag in popular_tags %}
+              <li><a href="#.">{{popular_tag}}</a></li>
+              {% endfor %} {% endcomment %}
+            </ul>
+
+            <!-- BRAND -->
+            <h5 class="shop-tittle margin-top-60 margin-bottom-30">brands</h5>
+            <ul class="shop-cate" id="shop-brand">
+              {% comment %} {% for popular_brand in popular_brands %}
+              <li><a href="#.">{{popular_brand}}</a></li>
+              {% endfor %} {% endcomment %}
+            </ul>
+
+            <!-- SIDE BAR BANER -->
+            <div class="side-bnr margin-top-50">
+              <img class="img-responsive" src="{{ new_product.main_image.url }}" alt="" />
+              <div class="position-center-center">
+                <span class="price"><small>$</small>{{ new_product.price }}</span>
+                <div class="bnr-text"><a href="{% url "products:product-detail" new_product.slug %}">look hot with style</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="small-about padding-top-150 padding-bottom-150">
+    <div class="container">
+      <!-- Main Heading -->
+      <div class="heading text-center">
+        <h4>about PAVSHOP</h4>
+        <p>
+          Phasellus lacinia fermentum bibendum. Interdum et malesuada fames ac
+          ante ipsumien lacus, eu posuere odio luctus non. Nulla lacinia, eros
+          vel fermentum consectetur, risus purus tempc, et iaculis odio dolor in
+          ex.
+        </p>
+      </div>
+
+      <!-- Social Icons -->
+      <ul class="social_icons">
+        <li>
+          <a href="#."><i class="icon-social-facebook"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-twitter"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-tumblr"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-youtube"></i></a>
+        </li>
+        <li>
+          <a href="#."><i class="icon-social-dribbble"></i></a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  {% endblock %} {% block js_files %}
+  <script src="{% static 'js/basket.js' %}"></script>
+  <script src="{% static 'js/filterProductAdd.js' %}"></script>
+  <script src="{% static 'js/filter-price.js' %}"></script>
+  {% comment %} <script src="{% static 'js/whislist.js' %}"></script> {% endcomment %}
+  {% endblock js_files %}
+</div>

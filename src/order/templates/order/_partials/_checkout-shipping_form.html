@@ -1,0 +1,70 @@
+<form method = 'post' id="shipping-form">
+    {% csrf_token %}
+
+    {{ shipping_form.shipping_form }}
+    <ul class="row">
+      <!-- Name -->
+      <li class="col-md-6">
+        <label>
+          {{ shipping_form.first_name.label }}
+          {{ shipping_form.first_name }}
+        </label>
+      </li>
+      <!-- LAST NAME -->
+      <li class="col-md-6">
+        <label>
+          {{ shipping_form.last_name.label }}
+          {{ shipping_form.last_name }}
+        </label>
+      </li>
+      <li class="col-md-6">
+        <!-- COMPANY NAME -->
+        <label>
+            {{ shipping_form.company_name.label }}
+            {{ shipping_form.company_name }}
+        </label>
+      </li>
+      <li class="col-md-6">
+        <!-- ADDRESS -->
+        <label>
+            {{ shipping_form.address.label }}
+            {{ shipping_form.address }}
+        </label>
+      </li>
+      <!-- TOWN/CITY -->
+      <li class="col-md-6">
+        <label>
+            {{ shipping_form.city.label }}
+            {{ shipping_form.city }}
+        </label>
+      </li>
+
+      <!-- COUNTRY -->
+      <li class="col-md-6">
+        <label>
+          {{ shipping_form.country.label }}
+          {{ shipping_form.country }}
+        </label>
+      </li>
+
+      <!-- ZIP -->
+      <li class="col-md-6">
+        <label>
+         {{ shipping_form.zipcode.label }}
+         {{ shipping_form.zipcode }}
+        </label>
+
+      <!-- PHONE -->
+      <li class="col-md-6">
+        <label>
+         {{ shipping_form.phone.label }}
+         {{ shipping_form.phone }}
+        </label>
+      </li>
+
+      <!-- PHONE -->
+      <li class="col-md-6">
+        <button type="submit" class="btn">SUBMIT</button>
+      </li>
+    </ul>
+  </form>

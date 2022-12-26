@@ -1,0 +1,12 @@
+COUNTRY_CHOICES = (
+    ('AZ','AZERBAIJAN'),
+    ('TR', 'TURKEY'),
+    ('RU','RUSSIA'),
+    ('US','AMERICA'),
+) 
+GENDER_MALE = 1
+GENDER_FEMALE = 2
+GENDER_CHOICES = (
+    (GENDER_MALE, "Man"),
+    (GENDER_FEMALE, "Woman"),
+)
